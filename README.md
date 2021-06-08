@@ -27,6 +27,13 @@ ex) 오리진 : https://www.naver.com/PORT
 
 다른 출처의 어플리케이션이 서로 통신하는 것에 대해 아무런 제약도 존재하지 않는다면, 악의를 가진 사용자가 소스 코드를 CSRF(Cross-Site Request Forgery)나 XSS(Cross-Site Scripting)와 같은 방법을 사용하여 사용자의 정보를 쉽게 탈취할 수 있다.
 
+### :star: 프록시 설정
+
+vue.config.js 파일을 따로 만들어 proxy를 지정해주었다.
+
+<code>proxy:'https://kr.api.riotgames.com' </code>
+
+proxy로 쓸 주소를 등록하게 되면 CORS 에러가 나지 않는다.
 
 
 
