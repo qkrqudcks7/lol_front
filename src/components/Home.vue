@@ -2,28 +2,33 @@
 <div>
   <div>
     <input type="text" v-model="name">
+    <button @click="find_id">dd</button>
+    <h3>{{data}}</h3>
   </div>
 </div>
 
 </template>
 
 <script>
-import axios from 'axios'
+import lolAPI from "../lolAPI"
 
 export default {
   name: "Home",
   data () {
     return {
-      name:"휴가개짧아"
+      name:"",
+      data:""
 
     }
   },
-  created () {
-    axios.get(`/lol/summoner/v4/summoners/by-name/${this.name}?api_key=RGAPI-aae88b92-c61f-43ba-ba52-9a93380afe89`)
-    .then(response => {
-      console.log(response.data)
-      console.log(response.data.accountId)
-    })
+  methods: {
+    find_id() {
+      lolAPI.find_id(this.name).then(response => {
+        console.log(response.data)
+        this.data = response.data.accountId
+      })
+}
+
   }
 }
 </script>
