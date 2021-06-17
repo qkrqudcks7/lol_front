@@ -5,6 +5,10 @@ const API_KEY="RGAPI-90bd10bc-7069-47c1-a26d-4e45f92e0118"
 export default {
     find_id(name) {
         return axios.get(`/lol/summoner/v4/summoners/by-name/${name}?api_key=${API_KEY}`)
+    },
+
+    find_league(id) {
+        return axios.get(`/lol/league/v4/entries/by-summoner/${id}?api_key=${API_KEY}`)
     }
 
 }
