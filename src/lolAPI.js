@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const API_KEY="RGAPI-90bd10bc-7069-47c1-a26d-4e45f92e0118"
+const API_KEY="RGAPI-80064fff-b604-4ae4-9f70-1a9065490f36"
 
 export default {
     find_id(name) {
@@ -9,6 +9,12 @@ export default {
 
     find_league(id) {
         return axios.get(`/lol/league/v4/entries/by-summoner/${id}?api_key=${API_KEY}`)
+    },
+    find_match(accountId) {
+        return axios.get(`/lol/match/v4/matchlists/by-account/${accountId}?api_key=${API_KEY}`)
+    },
+    find_detail_match(matchId) {
+        return axios.get(`/lol/match/v4/matches/${matchId}?api_key=${API_KEY}`)
     }
 
 }

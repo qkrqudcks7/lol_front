@@ -4,6 +4,7 @@
     <input type="text" v-model="name">
     <button @click="find_id">검색</button>
   </div>
+  <div>{{name}}</div>
   <div>
     <h3>솔로랭크</h3>
     <div>{{solo.tier + solo.rank}}</div>
@@ -17,8 +18,28 @@
     <div>{{free.wins}}승</div>
     <div>{{free.losses}}패</div>
   </div>
-</div>
 
+  <div>
+    <h3>디테일 10개</h3>
+
+  </div>
+
+  <div>
+    <h3>최근 10게임</h3>
+    <div v-for="i in match" :key="i">
+      <div>챔피언: {{i.champion}}</div>
+      <div >게임id: {{find_match_detail(i.gameId)}}</div>
+      <div>게임모드:{{detail_match.gameMode}}</div>
+      <div>게임모드:{{detail_match.gameMode}}</div>
+      <div>라인: {{i.lane}}</div>
+      <div>큐: {{i.queue}}</div>
+      <div>역할: {{i.role}}</div>
+      <div>시즌: {{i.season}}</div>
+      <div>시간: {{$moment(i.timestamp).format('YYYY-MM-DD HH:mm:SS')}}</div>
+      <div>--------------------------------</div>
+    </div>
+  </div>
+</div>
 </template>
 
 <script>
@@ -31,17 +52,24 @@ export default {
       name: "",
       data: "",
       solo: [],
-      free: []
+      free: [],
+      match:[],
+      detail_match:[]
 
     }
   },
   methods: {
     find_id() {
       lolAPI.find_id(this.name).then(response => {
-        console.log(response.data)
         this.data = response.data.id
+        let accountId = response.data.accountId
+
+        lolAPI.find_match(accountId).then(response => {
+          console.log(response.data)
+          this.match=response.data.matches
+        })
+
         lolAPI.find_league(this.data).then(response => {
-          console.log(response.data.length)
           if (response.data[0].queueType ==="RANKED_FLEX_SR"){
             this.free=response.data[0]
             if (response.data.length ===1 ) {
@@ -64,11 +92,17 @@ export default {
 
       }).catch(error => {
         if (error.response) {
-          this.data = "찾을 수 없는 사용자입니다."
+          this.name = "찾을 수 없는 사용자입니다."
+
         }
       })
-}
-
+    },
+    find_match_detail(matchId) {
+      lolAPI.find_detail_match(matchId).then(response => {
+        console.log(response.data)
+        this.detail_match=response.data
+      })
+    }
   }
 }
 </script>
