@@ -68,6 +68,9 @@ export default {
           console.log(response.data)
           this.match=response.data.matches
         })
+        lolAPI.find_match_detail2(accountId).then(response=> {
+          console.log(response.data)
+        })
 
         lolAPI.find_league(this.data).then(response => {
           if (response.data[0].queueType ==="RANKED_FLEX_SR"){
@@ -102,7 +105,10 @@ export default {
         console.log(response.data)
         this.detail_match=response.data
       })
-    }
+    },
+    // find_match_detail2(accountId) {
+    //
+    // }
   }
 }
 </script>

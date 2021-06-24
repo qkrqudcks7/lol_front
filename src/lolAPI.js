@@ -15,6 +15,9 @@ export default {
     },
     find_detail_match(matchId) {
         return axios.get(`/lol/match/v4/matches/${matchId}?api_key=${API_KEY}`)
+    },
+    find_detail_match2(accountId) {
+        return axios.get(`/lol/match/v4/timelines/by-match/${accountId}?api_key=${API_KEY}`)
     }
 
 }
