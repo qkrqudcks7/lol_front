@@ -26,11 +26,9 @@
 
   <div>
     <h3>최근 10게임</h3>
-    <div v-for="i in match" :key="i">
+    <div v-for="(i,index) in match" :key="index">
       <div>챔피언: {{i.champion}}</div>
       <div >게임id: {{find_match_detail(i.gameId)}}</div>
-      <div>게임모드:{{detail_match.gameMode}}</div>
-      <div>게임모드:{{detail_match.gameMode}}</div>
       <div>라인: {{i.lane}}</div>
       <div>큐: {{i.queue}}</div>
       <div>역할: {{i.role}}</div>
@@ -65,11 +63,7 @@ export default {
         let accountId = response.data.accountId
 
         lolAPI.find_match(accountId).then(response => {
-          console.log(response.data)
           this.match=response.data.matches
-        })
-        lolAPI.find_match_detail2(accountId).then(response=> {
-          console.log(response.data)
         })
 
         lolAPI.find_league(this.data).then(response => {
@@ -100,15 +94,11 @@ export default {
         }
       })
     },
-    find_match_detail(matchId) {
-      lolAPI.find_detail_match(matchId).then(response => {
-        console.log(response.data)
-        this.detail_match=response.data
-      })
-    },
-    // find_match_detail2(accountId) {
-    //
-    // }
+     find_match_detail(matchId) {
+       lolAPI.find_detail_match(matchId).then(response => {
+         this.detail_match=response.data
+       })
+     },
   }
 }
 </script>
