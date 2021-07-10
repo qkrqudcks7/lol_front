@@ -1,10 +1,11 @@
 <template>
-<div>
+  <div>
   <div>
     <input type="text" v-model="name">
     <button @click="find_id">검색</button>
   </div>
   <div>{{name}}</div>
+    <div>{{message}}</div>
   <div>
     <h3>솔로랭크</h3>
     <div>{{solo.tier + solo.rank}}</div>
@@ -37,68 +38,68 @@
       <div>--------------------------------</div>
     </div>
   </div>
-</div>
+  </div>
 </template>
 
 <script>
-import lolAPI from "../lolAPI"
-
+import lolAPI from '../API/lolAPI'
 export default {
-  name: "Home",
+  name: 'Home',
   data () {
     return {
-      name: "",
-      data: "",
+      name: '',
+      message: '',
+      data: '',
       solo: [],
       free: [],
-      match:[],
-      detail_match:[]
+      match: [],
+      detail_match: []
 
     }
   },
   methods: {
-    find_id() {
+    find_id () {
       lolAPI.find_id(this.name).then(response => {
         this.data = response.data.id
         let accountId = response.data.accountId
 
         lolAPI.find_match(accountId).then(response => {
-          this.match=response.data.matches
+          this.match = response.data.matches
         })
 
         lolAPI.find_league(this.data).then(response => {
-          if (response.data[0].queueType ==="RANKED_FLEX_SR"){
-            this.free=response.data[0]
-            if (response.data.length ===1 ) {
-              this.solo = ""
+          if (response.data[0].queueType === 'RANKED_FLEX_SR') {
+            this.free = response.data[0]
+            if (response.data.length === 1) {
+              this.solo = ''
             }
           }
-          if (response.data[0].queueType==="RANKED_SOLO_5x5") {
+          if (response.data[0].queueType === 'RANKED_SOLO_5x5') {
             this.solo = response.data[0]
-            if (response.data.length ===1 ) {
-              this.free = ""
+            if (response.data.length === 1) {
+              this.free = ''
             }
           }
-          if (response.data[1].queueType==="RANKED_FLEX_SR") {
+          if (response.data[1].queueType === 'RANKED_FLEX_SR') {
             this.free = response.data[1]
           }
-          if (response.data[1].queueType==="RANKED_SOLO_5x5") {
+          if (response.data[1].queueType === 'RANKED_SOLO_5x5') {
             this.solo = response.data[1]
           }
         })
-
       }).catch(error => {
         if (error.response) {
-          this.name = "찾을 수 없는 사용자입니다."
-
+          console.log(error.response)
+          this.message = '찾을 수 없는 사용자입니다.'
         }
       })
     },
-     find_match_detail(matchId) {
-       lolAPI.find_detail_match(matchId).then(response => {
-         this.detail_match=response.data
-       })
-     },
+    find_match_detail (matchId) {
+      lolAPI.find_detail_match(matchId).then(response => {
+        this.detail_match = response.data
+        console.log(this.detail_match)
+      })
+    }
   }
 }
 </script>
