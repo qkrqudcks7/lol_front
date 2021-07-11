@@ -28,8 +28,8 @@
   <div>
     <h3>최근 10게임</h3>
     <div v-for="(i,index) in match" :key="index">
-      <div>챔피언: {{i.champion}}</div>
-      <div >게임id: {{find_match_detail(i.gameId)}}</div>
+      <div>챔피언: {{findCharacterId(String(i.champion))}}</div>
+<!--      <div >게임id: {{find_match_detail(i.gameId)}}</div>-->
       <div>라인: {{i.lane}}</div>
       <div>큐: {{i.queue}}</div>
       <div>역할: {{i.role}}</div>
@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import championFile from '../lol_data/champion.json'
 import lolAPI from '../API/lolAPI'
 export default {
   name: 'Home',
@@ -54,10 +55,31 @@ export default {
       free: [],
       match: [],
       detail_match: []
-
+    }
+  },
+  computed: {
+    findCharacterId2 () {
+      return (champion) => {
+        let file = championFile.data
+        Object.keys(file).forEach(function (i) {
+          if (file[i].key === champion) {
+            console.log(file[i].name)
+            return file[i].name
+          }
+        })
+      }
     }
   },
   methods: {
+    findCharacterId (champion) {
+      let file = championFile.data
+      Object.keys(file).forEach(function (i) {
+        if (file[i].key === champion) {
+          console.log(file[i].name)
+          return file[i].name
+        }
+      })
+    },
     find_id () {
       lolAPI.find_id(this.name).then(response => {
         this.data = response.data.id
@@ -65,6 +87,7 @@ export default {
 
         lolAPI.find_match(accountId).then(response => {
           this.match = response.data.matches
+          console.log(response.data.matches)
         })
 
         lolAPI.find_league(this.data).then(response => {
