@@ -28,7 +28,8 @@
   <div>
     <h3>최근 10게임</h3>
     <div v-for="(i,index) in match" :key="index">
-      <div>챔피언: {{findCharacterId(String(i.champion))}}</div>
+      <div>챔피언: {{findCharacterId(i.champion)}}</div>
+      <div type="text" ref="`character${index}`"></div>
 <!--      <div >게임id: {{find_match_detail(i.gameId)}}</div>-->
       <div>라인: {{i.lane}}</div>
       <div>큐: {{i.queue}}</div>
@@ -58,27 +59,15 @@ export default {
     }
   },
   computed: {
-    findCharacterId2 () {
-      return (champion) => {
-        let file = championFile.data
-        Object.keys(file).forEach(function (i) {
-          if (file[i].key === champion) {
-            console.log(file[i].name)
-            return file[i].name
-          }
-        })
-      }
-    }
   },
   methods: {
     findCharacterId (champion) {
       let file = championFile.data
-      Object.keys(file).forEach(function (i) {
-        if (file[i].key === champion) {
-          console.log(file[i].name)
-          return file[i].name
+      for (let x in file) {
+        if (file[x].key === String(champion)) {
+          return file[x].name
         }
-      })
+      }
     },
     find_id () {
       lolAPI.find_id(this.name).then(response => {
@@ -87,7 +76,7 @@ export default {
 
         lolAPI.find_match(accountId).then(response => {
           this.match = response.data.matches
-          console.log(response.data.matches)
+          console.log(this.match)
         })
 
         lolAPI.find_league(this.data).then(response => {
