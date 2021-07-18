@@ -11,7 +11,7 @@ export default {
     return axios.get(`/lol/league/v4/entries/by-summoner/${id}?api_key=${API_KEY}`)
   },
   find_match (accountId) {
-    return axios.get(`/lol/match/v4/matchlists/by-account/${accountId}?api_key=${API_KEY}`, {params: {beginIndex: 0, endIndex: 20}})
+    return axios.get(`/lol/match/v4/matchlists/by-account/${accountId}?api_key=${API_KEY}`, {params: {beginIndex: 0, endIndex: 4}})
   },
   find_detail_match (matchId) {
     return axios.get(`/lol/match/v4/matches/${matchId}?api_key=${API_KEY}`)

@@ -21,21 +21,15 @@
   </div>
 
   <div>
-    <h3>디테일 10개</h3>
-
-  </div>
-
-  <div>
     <h3>최근 10게임</h3>
     <div v-for="(i,index) in match" :key="index">
       <div>챔피언: {{findCharacterId(i.champion)}}</div>
-      <div type="text" ref="`character${index}`"></div>
-<!--      <div >게임id: {{find_match_detail(i.gameId)}}</div>-->
       <div>라인: {{i.lane}}</div>
       <div>큐: {{i.queue}}</div>
       <div>역할: {{i.role}}</div>
       <div>시즌: {{i.season}}</div>
       <div>시간: {{$moment(i.timestamp).format('YYYY-MM-DD HH:mm:SS')}}</div>
+<!--      <div>{{findMatchDetail(i.gameId)}}</div>-->
       <div>--------------------------------</div>
     </div>
   </div>
@@ -55,7 +49,7 @@ export default {
       solo: [],
       free: [],
       match: [],
-      detail_match: []
+      detail: []
     }
   },
   computed: {
@@ -69,14 +63,38 @@ export default {
         }
       }
     },
-    find_id () {
+    async find_id () {
       lolAPI.find_id(this.name).then(response => {
         this.data = response.data.id
         let accountId = response.data.accountId
 
         lolAPI.find_match(accountId).then(response => {
           this.match = response.data.matches
-          console.log(this.match)
+          for (let a of this.match) {
+            lolAPI.find_detail_match(a.gameId).then(response => {
+              let array = []
+              let data = response.data
+              let id = ''
+              for (let i = 1; i < data.participantIdentities.length; i++) {
+                if (data.participantIdentities[i].player.summonerName === this.name) {
+                  id = data.participantIdentities[i].participantId
+                  break
+                }
+              }
+              for (let i = 0; i < 2; i++) {
+                if (data.teams[i].teamId === data.participants[id].teamId) {
+                  array.push(data.teams[i].win)
+                }
+              }
+              array.push(data.participants[id - 1].spell1Id)
+              array.push(data.participants[id - 1].spell2Id)
+              array.push(data.participants[id - 1].stats.kills)
+              array.push(data.participants[id - 1].stats.deaths)
+              array.push(data.participants[id - 1].stats.assists)
+              console.log(array)
+              return array
+            })
+          }
         })
 
         lolAPI.find_league(this.data).then(response => {
@@ -106,10 +124,30 @@ export default {
         }
       })
     },
-    find_match_detail (matchId) {
-      lolAPI.find_detail_match(matchId).then(response => {
-        this.detail_match = response.data
-        console.log(this.detail_match)
+    findMatchDetail (matchId) {
+      return lolAPI.find_detail_match(matchId).then(response => {
+        let array = []
+        let data = response.data
+        console.log(data)
+        let id = ''
+        for (let i = 1; i < data.participantIdentities.length; i++) {
+          if (data.participantIdentities[i].player.summonerName === this.name) {
+            id = data.participantIdentities[i].participantId
+            break
+          }
+        }
+        for (let i = 0; i < 2; i++) {
+          if (data.teams[i].teamId === data.participants[id].teamId) {
+            array.push(data.teams[i].win)
+          }
+        }
+        array.push(data.participants[id - 1].spell1Id)
+        array.push(data.participants[id - 1].spell2Id)
+        array.push(data.participants[id - 1].stats.kills)
+        array.push(data.participants[id - 1].stats.deaths)
+        array.push(data.participants[id - 1].stats.assists)
+        console.log(array)
+        return array
       })
     }
   }
