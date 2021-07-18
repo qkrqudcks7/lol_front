@@ -29,8 +29,15 @@
       <div>역할: {{i.role}}</div>
       <div>시즌: {{i.season}}</div>
       <div>시간: {{$moment(i.timestamp).format('YYYY-MM-DD HH:mm:SS')}}</div>
-<!--      <div>{{findMatchDetail(i.gameId)}}</div>-->
       <div>--------------------------------</div>
+    </div>
+    <div v-for="(j,index) in detail" :key="'a'+index">
+      <div>{{j[0]}}</div>
+      <div>{{j[1]}}</div>
+      <div>{{j[2]}}</div>
+      <div>킬: {{j[3]}}</div>
+      <div>데스: {{j[4]}}</div>
+      <div>어시: {{j[5]}}</div>
     </div>
   </div>
   </div>
@@ -68,10 +75,10 @@ export default {
         this.data = response.data.id
         let accountId = response.data.accountId
 
-        lolAPI.find_match(accountId).then(response => {
+        lolAPI.find_match(accountId).then(async response => {
           this.match = response.data.matches
-          for (let a of this.match) {
-            lolAPI.find_detail_match(a.gameId).then(response => {
+          for (let b of this.match) {
+            await lolAPI.find_detail_match(b.gameId).then(response => {
               let array = []
               let data = response.data
               let id = ''
@@ -91,10 +98,10 @@ export default {
               array.push(data.participants[id - 1].stats.kills)
               array.push(data.participants[id - 1].stats.deaths)
               array.push(data.participants[id - 1].stats.assists)
-              console.log(array)
-              return array
+              this.detail.push(array)
             })
           }
+          console.log(this.detail)
         })
 
         lolAPI.find_league(this.data).then(response => {
