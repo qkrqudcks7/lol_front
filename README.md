@@ -116,11 +116,31 @@ async findMatchDetail (matchId) {
       })
       console.log(array)
     }
-    </code></pre>
+</code></pre>
 
 함수명 앞에 예약어인 async를 붙여주고, 의도한 대로 동작하게 할 api 앞에 await를 붙여주어 밑으로 차례대로 동작하도록 만들었습니다.
 
 <hr>
 
 ## :imp: 반복문에서 Async Await 객체 순서 오류
+
+ ### :exclamation: 문제점
  
+callback을 요구하는 반복문에서 Await의 동작방식은 내 생각과 달랐다.
+
+자바스크립트의 forEach는 promise를 인지하지 못하기 때문에 반복문의 순서가 맞지 않았다. 즏 말은, async/await을 forEach안에서 쓸 수 없다는 것이다.
+
+
+<pre><code>
+lolAPI.find_match(accountId).then(async response => {
+   this.match = response.data.matches
+   for (let b of this.match) {
+     await lolAPI.find_detail_match(b.gameId).then(response => {
+     .......
+</code></pre>
+
+ ### :star: 해결방안 For of 문
+
+그래서 For...of 문을 사용하여 비동기 병렬처리를 해주었다.
+
+원래 기대했던 대로 결과 값을 확인할 수 있었다.
