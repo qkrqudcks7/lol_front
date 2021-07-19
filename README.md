@@ -34,3 +34,93 @@ vue.config.js 파일을 따로 만들어 proxy를 지정해주었다.
 <code>proxy:'https://kr.api.riotgames.com' </code>
 
 proxy로 쓸 주소를 등록하게 되면 CORS 에러가 나지 않는다.
+
+<hr>
+
+## :imp: Async Await Promise 객체 해결하기
+
+## Async Await의 이해
+
+### match Id 값을 이용해 디테일한 정보를 얻는 메소드
+<pre><code>
+findMatchDetail (matchId) {
+      let array = []
+      lolAPI.find_detail_match(matchId).then(response => {
+        let data = response.data
+        console.log(data)
+        let id = ''
+        for (let i = 1; i < data.participantIdentities.length; i++) {
+          if (data.participantIdentities[i].player.summonerName === this.name) {
+            id = data.participantIdentities[i].participantId
+            break
+          }
+        }
+        for (let i = 0; i < 2; i++) {
+          if (data.teams[i].teamId === data.participants[id].teamId) {
+            array.push(data.teams[i].win)
+          }
+        }
+        array.push(data.participants[id - 1].spell1Id)
+        array.push(data.participants[id - 1].spell2Id)
+        array.push(data.participants[id - 1].stats.kills)
+        array.push(data.participants[id - 1].stats.deaths)
+        array.push(data.participants[id - 1].stats.assists)
+        console.log(array)
+        return array
+      })
+      console.log(array)
+    }
+    </code></pre>
+ 
+ ### :exclamation: 문제점
+ 
+ 콘솔을 찍어보며 데이터 값을 확인하다. 문제점을 발견했다.
+ 
+ <b>맨 밑의 콘솔과 그 두 줄 위에 있는 콘솔이 같은 값을 출력하라고 돼있지만 정작 다른 값이 찍히는 것이다.</b>
+ 
+ js 동작 원리의 이해가 부족한 탓이다. js는 동기적 언어이기 때문에 단일 스레드로 작동이 된다.
+ 
+ 그 뜻은 한번에 하나의 작업만 할 수 있고, 다른 작업이 들어오면 한 작업이 끝날 때까지 기다려야 하는 것이다.
+ 
+ 그렇기 때문에 비록 lolAPI.find_detail_match(matchId)로 array를 변경시킬 수 있지만,
+ 
+ let array가 먼저 대기열에서 작동하고 있기 때문에 array가 맨 밑 콘솔에 빈 값으로 찍힌 후 저 api가 동작하는 것이다.
+ 
+ ### :star: 해결방안 async await
+ 
+ <pre><code>
+async findMatchDetail (matchId) {
+      let array = []
+      await lolAPI.find_detail_match(matchId).then(response => {
+        let data = response.data
+        console.log(data)
+        let id = ''
+        for (let i = 1; i < data.participantIdentities.length; i++) {
+          if (data.participantIdentities[i].player.summonerName === this.name) {
+            id = data.participantIdentities[i].participantId
+            break
+          }
+        }
+        for (let i = 0; i < 2; i++) {
+          if (data.teams[i].teamId === data.participants[id].teamId) {
+            array.push(data.teams[i].win)
+          }
+        }
+        array.push(data.participants[id - 1].spell1Id)
+        array.push(data.participants[id - 1].spell2Id)
+        array.push(data.participants[id - 1].stats.kills)
+        array.push(data.participants[id - 1].stats.deaths)
+        array.push(data.participants[id - 1].stats.assists)
+        console.log(array)
+        return array
+      })
+      console.log(array)
+    }
+    </code></pre>
+
+함수명 앞에 예약어인 async를 붙여주고, 의도한 대로 동작하게 할 api 앞에 await를 붙여주어 밑으로 차례대로 동작하도록 만들었습니다.
+
+<hr>
+
+## :imp: 반복문에서 Async Await 객체 순서 오류
+ 
