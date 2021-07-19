@@ -22,23 +22,40 @@
 
   <div>
     <h3>최근 10게임</h3>
-    <div v-for="(j,index) in detail" :key="'a'+index">
-      <div>{{j[0]}}</div>
-      <div>{{j[1]}}</div>
-      <img :src="j[3]">
+    <hr>
+    <div v-for="(j,index) in detail" :key="index">
+      <div>{{j[3]}}</div>
+      <div>{{j[2]}}</div>
+      <img :src="j[0]"><br>
       <img :src="j[5]">
-      <div>{{j[6]}} / {{j[7]}} / {{j[8]}}</div>
-      <div>평점 : {{ ((j[6] + j[8]) / j[7]).toFixed(2)}}</div>
-      <div>레벨 : {{j[9]}}</div>
-      <div>cs : {{j[10]}}</div>
-      <img :src="j[11]">
-      <img :src="j[12]">
-      <img :src="j[13]">
-      <img :src="j[14]">
+      <img :src="j[7]">
+      <div>{{j[1]}}</div>
+      <div>{{j[8]}} / {{j[9]}} / {{j[10]}}</div>
+      <div>평점 : {{ ((j[8] + j[10]) / j[9]).toFixed(2)}}</div>
+      <div>레벨 : {{j[11]}}</div>
+      <div>cs : {{j[12]}}</div>
+      <img :src="j[15]">
       <img :src="j[16]">
       <img :src="j[17]">
-      <img :src="j[15]">
-      <div>--------------------------------------------------------------------</div>
+      <img :src="j[18]">
+      <img :src="j[20]">
+      <img :src="j[21]">
+      <img :src="j[19]">
+      <div>
+        {{j[13][0]}}<img :src="j[14][0]" height="50" width="50">
+        {{j[13][1]}}<img :src="j[14][1]" height="50" width="50">
+        {{j[13][2]}}<img :src="j[14][2]" height="50" width="50">
+        {{j[13][3]}}<img :src="j[14][3]" height="50" width="50">
+        {{j[13][4]}}<img :src="j[14][4]" height="50" width="50">
+      </div>
+      <div>
+        {{j[13][5]}}<img :src="j[14][5]" height="50" width="50">
+        {{j[13][6]}}<img :src="j[14][6]" height="50" width="50">
+        {{j[13][7]}}<img :src="j[14][7]" height="50" width="50">
+        {{j[13][8]}}<img :src="j[14][8]" height="50" width="50">
+        {{j[13][9]}}<img :src="j[14][9]" height="50" width="50">
+      </div>
+      <hr>
     </div>
   </div>
   </div>
@@ -69,8 +86,18 @@ export default {
       let file = championFile.data
       for (let x in file) {
         if (file[x].key === String(champion)) {
-          return file[x].name
+          return 'static/champion/' + file[x].id + '.png'
         }
+      }
+    },
+    getDurationTime (seconds) {
+      let hour = parseInt(seconds / 3600)
+      let min = parseInt((seconds % 3600) / 60)
+      let sec = seconds % 60
+      if (hour !== 0) {
+        return hour + '시간' + min + '분' + sec + '초'
+      } else {
+        return min + '분 ' + sec + '초'
       }
     },
     async find_id () {
@@ -84,7 +111,10 @@ export default {
             await lolAPI.find_detail_match(b.gameId).then(response => {
               let array = []
               array.push(this.findCharacterId(b.champion))
+              array.push(this.$moment(b.timestamp).format('YYYY-MM-DD HH:mm:SS'))
               let data = response.data
+              array.push(this.getDurationTime(data.gameDuration))
+              // 해당 유저 아이디 값 구하기
               let id = ''
               for (let i = 1; i < data.participantIdentities.length; i++) {
                 if (data.participantIdentities[i].player.summonerName === this.name) {
@@ -92,6 +122,7 @@ export default {
                   break
                 }
               }
+              // 아이디 값으로 승,패 구하기
               for (let i = 0; i < 2; i++) {
                 if (data.teams[i].teamId === data.participants[id].teamId) {
                   if (data.teams[i].win === 'Win') {
@@ -101,6 +132,7 @@ export default {
                   }
                 }
               }
+              // 스펠 1 구하기
               let file = spellFile.data
               for (let i in file) {
                 if (file[i].key === String(data.participants[id - 1].spell1Id)) {
@@ -109,6 +141,7 @@ export default {
                   break
                 }
               }
+              // 스펠 2 구하기
               for (let i in file) {
                 if (file[i].key === String(data.participants[id - 1].spell2Id)) {
                   array.push(file[i].name)
@@ -121,6 +154,19 @@ export default {
               array.push(data.participants[id - 1].stats.assists)
               array.push(data.participants[id - 1].stats.champLevel)
               array.push(data.participants[id - 1].stats.totalMinionsKilled)
+              // 전체 인원 닉네임 구하기
+              let nameArray = []
+              for (let i in data.participantIdentities) {
+                nameArray.push(data.participantIdentities[i].player.summonerName)
+              }
+              array.push(nameArray)
+              // 전체 인원 챔피언 구하기
+              let champArray = []
+              for (let i in data.participants) {
+                champArray.push(this.findCharacterId(data.participants[i].championId))
+              }
+              array.push(champArray)
+              // 아이템 구하기
               let Ifile = itemFile.data
               for (let i in Ifile) {
                 if (i === String(data.participants[id - 1].stats.item0)) {
@@ -139,7 +185,6 @@ export default {
                   array.push('static/item/' + Ifile[i].image.full)
                 }
               }
-
               this.detail.push(array)
             })
           }
