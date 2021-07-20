@@ -1,63 +1,66 @@
 <template>
   <div>
-  <div>
-    <input type="text" v-model="name">
-    <button @click="find_id">검색</button>
-  </div>
-  <div>{{name}}</div>
-    <div>{{message}}</div>
-  <div>
-    <h3>솔로랭크</h3>
-    <div>{{solo.tier + solo.rank}}</div>
-    <div>{{solo.wins}}승</div>
-    <div>{{solo.losses}}패</div>
-  </div>
-
-  <div>
-    <h3>자유랭크</h3>
-    <div>{{free.tier + free.rank}}</div>
-    <div>{{free.wins}}승</div>
-    <div>{{free.losses}}패</div>
-  </div>
-
-  <div>
-    <h3>최근 10게임</h3>
-    <hr>
-    <div v-for="(j,index) in detail" :key="index">
-      <div>{{j[3]}}</div>
-      <div>{{j[2]}}</div>
-      <img :src="j[0]"><br>
-      <img :src="j[5]">
-      <img :src="j[7]">
-      <div>{{j[1]}}</div>
-      <div>{{j[8]}} / {{j[9]}} / {{j[10]}}</div>
-      <div>평점 : {{ ((j[8] + j[10]) / j[9]).toFixed(2)}}</div>
-      <div>레벨 : {{j[11]}}</div>
-      <div>cs : {{j[12]}}</div>
-      <img :src="j[15]">
-      <img :src="j[16]">
-      <img :src="j[17]">
-      <img :src="j[18]">
-      <img :src="j[20]">
-      <img :src="j[21]">
-      <img :src="j[19]">
-      <div>
-        {{j[13][0]}}<img :src="j[14][0]" height="50" width="50">
-        {{j[13][1]}}<img :src="j[14][1]" height="50" width="50">
-        {{j[13][2]}}<img :src="j[14][2]" height="50" width="50">
-        {{j[13][3]}}<img :src="j[14][3]" height="50" width="50">
-        {{j[13][4]}}<img :src="j[14][4]" height="50" width="50">
-      </div>
-      <div>
-        {{j[13][5]}}<img :src="j[14][5]" height="50" width="50">
-        {{j[13][6]}}<img :src="j[14][6]" height="50" width="50">
-        {{j[13][7]}}<img :src="j[14][7]" height="50" width="50">
-        {{j[13][8]}}<img :src="j[14][8]" height="50" width="50">
-        {{j[13][9]}}<img :src="j[14][9]" height="50" width="50">
-      </div>
-      <hr>
+    <div>
+      <input type="text" v-model="name">
+      <button @click="find_id">검색</button>
     </div>
-  </div>
+    <div>{{name}}</div>
+    <hr>
+    <div>
+      <div>솔로랭크</div>
+      <img :src="'static/emblems/' + solo.tier + '.png'" height="100" width="100">
+      <div>{{solo.tier + solo.rank}}</div>
+      <div>{{solo.leaguePoints}}LP / {{solo.wins}}승 {{solo.losses}}패</div>
+      <div>승률 : {{ (solo.wins / (solo.wins + solo.losses) * 100).toFixed(0) }}%</div>
+    </div>
+
+    <div>
+      <div>자유 5:5 랭크</div>
+      <img :src="'static/emblems/' + free.tier + '.png'" height="100" width="100">
+      <div>{{free.tier + free.rank}}</div>
+      <div>{{free.leaguePoints}}LP / {{free.wins}}승 {{free.losses}}패</div>
+      <div>승률 : {{ (free.wins / (free.wins + free.losses) * 100).toFixed(0) }}%</div>
+    </div>
+    <hr>
+    <div>
+      <h3>최근 20게임</h3>
+      <div v-for="(j,index) in detail" :key="index">
+        <div>{{j[3]}}</div>
+        <div>{{j[2]}}</div>
+        <img :src="j[0]"><br>
+        <img :src="j[5]">
+        <img :src="j[7]">
+        <img :src="j[15][0]" height="80" width="80">
+        <img :src="j[15][1]" height="50" width="50">
+        <div>{{j[1]}}</div>
+        <div>{{j[8]}} / {{j[9]}} / {{j[10]}}</div>
+        <div>평점 : {{ ((j[8] + j[10]) / j[9]).toFixed(2)}}</div>
+        <div>레벨 : {{j[11]}}</div>
+        <div>cs : {{j[12]}}</div>
+        <img :src="j[16]">
+        <img :src="j[17]">
+        <img :src="j[18]">
+        <img :src="j[19]">
+        <img :src="j[21]">
+        <img :src="j[22]">
+        <img :src="j[20]">
+        <div>
+          {{j[13][0]}}<img :src="j[14][0]" height="50" width="50">
+          {{j[13][1]}}<img :src="j[14][1]" height="50" width="50">
+          {{j[13][2]}}<img :src="j[14][2]" height="50" width="50">
+          {{j[13][3]}}<img :src="j[14][3]" height="50" width="50">
+          {{j[13][4]}}<img :src="j[14][4]" height="50" width="50">
+        </div>
+        <div>
+          {{j[13][5]}}<img :src="j[14][5]" height="50" width="50">
+          {{j[13][6]}}<img :src="j[14][6]" height="50" width="50">
+          {{j[13][7]}}<img :src="j[14][7]" height="50" width="50">
+          {{j[13][8]}}<img :src="j[14][8]" height="50" width="50">
+          {{j[13][9]}}<img :src="j[14][9]" height="50" width="50">
+        </div>
+        <hr>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -65,6 +68,7 @@
 import championFile from '../lol_data/champion.json'
 import spellFile from '../lol_data/summoner.json'
 import itemFile from '../lol_data/item.json'
+import runesFile from '../lol_data/runesReforged.json'
 import lolAPI from '../API/lolAPI'
 export default {
   name: 'Home',
@@ -98,6 +102,30 @@ export default {
         return hour + '시간' + min + '분' + sec + '초'
       } else {
         return min + '분 ' + sec + '초'
+      }
+    },
+    findRunes (runeNum) {
+      let runeFile = runesFile
+      for (let x in runeFile) {
+        if (runeFile[x].id === runeNum) {
+          return 'static/' + runeFile[x].icon
+        }
+      }
+    },
+    findMainRunes (runeNum, detailRune) {
+      let runeFile = runesFile
+      for (let x in runeFile) {
+        if (runeFile[x].id === runeNum) {
+          for (let y in runeFile[x].slots) {
+            for (let z in runeFile[x].slots[y]) {
+              for (let a in runeFile[x].slots[y][z]) {
+                if (runeFile[x].slots[y][z][a].id === detailRune) {
+                  return 'static/' + runeFile[x].slots[y][z][a].icon
+                }
+              }
+            }
+          }
+        }
       }
     },
     async find_id () {
@@ -166,6 +194,11 @@ export default {
                 champArray.push(this.findCharacterId(data.participants[i].championId))
               }
               array.push(champArray)
+              // 룬 구하기
+              let runes = []
+              runes.push(this.findMainRunes(data.participants[id - 1].stats.perkPrimaryStyle, data.participants[id - 1].stats.perk0))
+              runes.push(this.findRunes(data.participants[id - 1].stats.perkSubStyle))
+              array.push(runes)
               // 아이템 구하기
               let Ifile = itemFile.data
               for (let i in Ifile) {
@@ -188,7 +221,6 @@ export default {
               this.detail.push(array)
             })
           }
-          console.log(this.detail)
         })
 
         lolAPI.find_league(this.data).then(response => {
