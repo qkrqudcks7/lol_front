@@ -11,6 +11,8 @@ import 'bootstrap-vue/dist/bootstrap-vue.min.css'
 import VeeValidate from 'vee-validate'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
 import {
   faHome,
   faUser,
@@ -24,6 +26,7 @@ library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt, faPen)
 
 Vue.use(VueMoment)
 Vue.use(BootstrapVue)
+Vue.use(Vuetify)
 Vue.use(VeeValidate)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.config.productionTip = false
@@ -34,5 +37,6 @@ new Vue({
   router,
   store,
   components: { App },
+  vuetify: new Vuetify(),
   template: '<App/>'
 })

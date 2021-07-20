@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <v-app>
     <nav class="navbar navbar-expand navbar-dark bg-dark">
       <div class="navbar-brand">Park.GG</div>
       <div class="navbar-nav mr-auto">
@@ -41,15 +41,21 @@
         </li>
       </div>
     </nav>
-    <div class="container">
-      <router-view></router-view>
-    </div>
-  </div>
+
+    <v-main>
+      <router-view/>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
+
 export default {
   name: 'App',
+
+  data: () => ({
+    //
+  }),
   computed: {
     currentUser () {
       return this.$store.state.auth.initialState.user
@@ -63,7 +69,6 @@ export default {
   }
 }
 </script>
-
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
