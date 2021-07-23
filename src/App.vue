@@ -9,6 +9,11 @@
           </a>
         </li>
         <li class="nav-item">
+          <a href="/champ" class="nav-link">
+            <font-awesome-icon icon="pen" /> 챔피언
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="/boardlist" class="nav-link">
             <font-awesome-icon icon="pen" /> 게시판
           </a>
