@@ -24,7 +24,7 @@
               cols="6"
               md="2"
             >
-              <v-sheet height="200" width="200"><a href="#"><img :src="'static/champion/' + j.img" height="200" width="200"></a>
+              <v-sheet height="200" width="200"><img :src="'static/champion/' + j.img" height="200" width="200" @click="getOneChamp(j.name)">
                 <div>{{j.name}}</div>
               </v-sheet>
               <br>
@@ -43,6 +43,11 @@ export default {
   data () {
     return {
       allChamp: []
+    }
+  },
+  methods: {
+    getOneChamp (champName) {
+      this.$router.push({name: 'detailChamp', params: {name: champName}})
     }
   },
   mounted () {
