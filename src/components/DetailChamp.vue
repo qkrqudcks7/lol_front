@@ -26,7 +26,7 @@
               >
                 <v-list-item-content>
                   <v-list-item-title>
-                    Refresh
+                    dd
                   </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
@@ -58,6 +58,9 @@ export default {
   computed: {
     getName () {
       return this.$route.params.name
+    },
+    getImage () {
+      return this.$route.params.img
     }
   },
   mounted () {

@@ -11,6 +11,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.min.css'
 import VeeValidate from 'vee-validate'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import '@mdi/font/css/materialdesignicons.css'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import {
@@ -37,6 +38,10 @@ new Vue({
   router,
   store,
   components: { App },
-  vuetify: new Vuetify(),
+  vuetify: new Vuetify({
+    icons: {
+      iconfont: 'mdi'
+    }
+  }),
   template: '<App/>'
 })

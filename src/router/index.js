@@ -5,6 +5,7 @@ import Login from '../components/Login'
 import Profile from '../components/Profile'
 import Champ from '../components/Champ'
 import DetailChamp from '../components/DetailChamp'
+import Example from '../components/Example'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router({
       path: '/detailChamp',
       name: 'detailChamp',
       component: DetailChamp
+    },
+    {
+      path: '/example',
+      name: 'example',
+      component: Example
     }
   ]
 })

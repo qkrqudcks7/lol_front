@@ -11,7 +11,6 @@
       fixed
       temporary
     >
-      <!--  -->
     </v-navigation-drawer>
 
     <v-main class="grey lighten-2">
@@ -24,7 +23,7 @@
               cols="6"
               md="2"
             >
-              <v-sheet height="200" width="200"><img :src="'static/champion/' + j.img" height="200" width="200" @click="getOneChamp(j.name)">
+              <v-sheet height="200" width="200"><img :src="'static/champion/' + j.img" height="200" width="200" @click="getOneChamp(j.name,j.img)">
                 <div>{{j.name}}</div>
               </v-sheet>
               <br>
@@ -46,8 +45,8 @@ export default {
     }
   },
   methods: {
-    getOneChamp (champName) {
-      this.$router.push({name: 'detailChamp', params: {name: champName}})
+    getOneChamp (champName, champImg) {
+      this.$router.push({name: 'detailChamp', params: {name: champName, img: champImg}})
     }
   },
   mounted () {

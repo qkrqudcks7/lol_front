@@ -6,61 +6,512 @@
     </div>
     <div>{{name}}</div>
     <hr>
-    <div>
-      <div>솔로랭크</div>
-      <img :src="'static/emblems/' + solo.tier + '.png'" height="100" width="100">
-      <div>{{solo.tier + solo.rank}}</div>
-      <div>{{solo.leaguePoints}}LP / {{solo.wins}}승 {{solo.losses}}패</div>
-      <div>승률 : {{ (solo.wins / (solo.wins + solo.losses) * 100).toFixed(0) }}%</div>
-    </div>
+    <v-container fluid>
+      <v-row>
+        <v-card
+          class="mx-auto"
+          max-width="400"
+        >
+          <v-img
+            class="blue--text align-end"
+            height="350px"
+            :src="'static/emblems/' + solo.tier + '.png'"
+          >
+            <v-card-title>{{solo.tier + solo.rank}}</v-card-title>
+          </v-img>
 
-    <div>
-      <div>자유 5:5 랭크</div>
-      <img :src="'static/emblems/' + free.tier + '.png'" height="100" width="100">
-      <div>{{free.tier + free.rank}}</div>
-      <div>{{free.leaguePoints}}LP / {{free.wins}}승 {{free.losses}}패</div>
-      <div>승률 : {{ (free.wins / (free.wins + free.losses) * 100).toFixed(0) }}%</div>
-    </div>
+          <v-card-subtitle class="pb-0">솔로랭크</v-card-subtitle>
+
+          <v-card-text class="text--primary">
+            <strong>{{solo.leaguePoints}}LP / {{solo.wins}}승 {{solo.losses}}패</strong>
+            <br>
+            <strong>승률 : {{ (solo.wins / (solo.wins + solo.losses) * 100).toFixed(0) }}%</strong>
+          </v-card-text>
+        </v-card>
+        <v-card
+          class="mx-auto"
+          max-width="400"
+        >
+          <v-img
+            class="blue--text align-end"
+            height="350px"
+            :src="'static/emblems/' + free.tier + '.png'"
+          >
+            <v-card-title>{{free.tier + free.rank}}</v-card-title>
+          </v-img>
+
+          <v-card-subtitle class="pb-0">자유 5:5 랭크</v-card-subtitle>
+
+          <v-card-text class="text--primary">
+            <strong>{{free.leaguePoints}}LP / {{free.wins}}승 {{free.losses}}패</strong>
+            <br>
+            <strong>승률 : {{ (free.wins / (free.wins + free.losses) * 100).toFixed(0) }}%</strong>
+          </v-card-text>
+        </v-card>
+      </v-row>
+    </v-container>
     <hr>
-    <div>
-      <h3>최근 20게임</h3>
-      <div v-for="(j,index) in detail" :key="index">
-        <div>{{j[3]}}</div>
-        <div>{{j[2]}}</div>
-        <img :src="j[0]"><br>
-        <img :src="j[5]">
-        <img :src="j[7]">
-        <img :src="j[15][0]" height="80" width="80">
-        <img :src="j[15][1]" height="50" width="50">
-        <div>{{j[1]}}</div>
-        <div>{{j[8]}} / {{j[9]}} / {{j[10]}}</div>
-        <div>평점 : {{ ((j[8] + j[10]) / j[9]).toFixed(2)}}</div>
-        <div>레벨 : {{j[11]}}</div>
-        <div>cs : {{j[12]}}</div>
-        <img :src="j[16]">
-        <img :src="j[17]">
-        <img :src="j[18]">
-        <img :src="j[19]">
-        <img :src="j[21]">
-        <img :src="j[22]">
-        <img :src="j[20]">
-        <div>
-          {{j[13][0]}}<img :src="j[14][0]" height="50" width="50">
-          {{j[13][1]}}<img :src="j[14][1]" height="50" width="50">
-          {{j[13][2]}}<img :src="j[14][2]" height="50" width="50">
-          {{j[13][3]}}<img :src="j[14][3]" height="50" width="50">
-          {{j[13][4]}}<img :src="j[14][4]" height="50" width="50">
-        </div>
-        <div>
-          {{j[13][5]}}<img :src="j[14][5]" height="50" width="50">
-          {{j[13][6]}}<img :src="j[14][6]" height="50" width="50">
-          {{j[13][7]}}<img :src="j[14][7]" height="50" width="50">
-          {{j[13][8]}}<img :src="j[14][8]" height="50" width="50">
-          {{j[13][9]}}<img :src="j[14][9]" height="50" width="50">
-        </div>
-        <hr>
-      </div>
-    </div>
+    <v-container fluid>
+      <v-row justify="center">
+        <v-subheader>최근 20 게임</v-subheader>
+
+        <v-expansion-panels popout>
+          <v-expansion-panel
+            v-for="(j,index) in detail" :key="index"
+            hide-actions
+          >
+            <v-expansion-panel-header v-if="j[4] === '승리'" color="#BBDEFB">
+              <v-col
+                class="text-no-wrap"
+                cols="5"
+                sm="2"
+              >
+                <strong v-html="j[4]"></strong><br><br>
+                <strong v-html="j[3]"></strong><br><br>
+                <strong v-html="j[2]"></strong><br><br>
+              </v-col>
+              <v-row
+                align="center"
+                class="spacer"
+                no-gutters
+              >
+                <v-col
+                  cols="4"
+                  sm="2"
+                  md="1"
+                >
+                  <v-avatar
+                    size="55px"
+                  >
+                    <img
+                      alt="Avatar"
+                      :src="j[1]"
+                    >
+                  </v-avatar>
+                  <v-avatar
+                    size="25px"
+                  >
+                    <img
+                      alt="Avatar"
+                      :src="j[16][0]"
+                    >
+                  </v-avatar>
+                  <v-avatar
+                    size="25px"
+                  >
+                    <img
+                      alt="Avatar"
+                      :src="j[16][1]"
+                    >
+                  </v-avatar>
+                  <v-avatar
+                    size="25px"
+                  >
+                    <img
+                      alt="Avatar"
+                      :src="j[6]"
+                    >
+                  </v-avatar>
+                  <v-avatar
+                    size="25px"
+                  >
+                    <img
+                      :src="j[8]"
+                    >
+                  </v-avatar>
+                </v-col>
+
+                <v-col
+                  class="hidden-xs-only"
+                  sm="5"
+                  md="3"
+                >
+                  <strong>{{j[9]}} / {{j[10]}} / {{j[11]}}</strong><br><br>
+                  <strong>평점 : {{ ((j[9] + j[11]) / j[10]).toFixed(2)}}</strong>
+                </v-col>
+
+                <v-col
+                  class="text-no-wrap"
+                  cols="5"
+                  sm="3"
+                >
+                  <strong>레벨 : {{j[12]}}</strong><br><br>
+                  <strong>cs : {{j[13]}}</strong>
+                </v-col>
+
+                <v-col
+                  class="grey--text text-truncate hidden-sm-and-down"
+                >
+                  <div>
+                  <v-avatar
+                    size="36px"
+                  >
+                    <img
+                      :src="j[17]"
+                    >
+                  </v-avatar>
+                  <v-avatar
+                    size="36px"
+                  >
+                    <img
+                      :src="j[18]"
+                    >
+                  </v-avatar>
+                  <v-avatar
+                    size="36px"
+                  >
+                    <img
+                      :src="j[19]"
+                    >
+                  </v-avatar>
+                  </div>
+                  <v-avatar
+                    size="36px"
+                  >
+                    <img
+                      :src="j[20]"
+                    >
+                  </v-avatar>
+                  <v-avatar
+                    size="36px"
+                  >
+                    <img
+                      :src="j[22]"
+                    >
+                  </v-avatar>
+                  <v-avatar
+                    size="36px"
+                  >
+                    <img
+                      :src="j[23]"
+                    >
+                  </v-avatar>
+                  <v-avatar
+                    size="36px"
+                  >
+                    <img
+                      :src="j[21]"
+                    >
+                  </v-avatar>
+                </v-col>
+                <v-col
+                  class="grey--text text-truncate hidden-sm-and-down"
+                >
+                  <div>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img :title="j[14][0]"
+                        :src="j[15][0]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img :title="j[14][1]"
+                        :src="j[15][1]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img :title="j[14][2]"
+                        :src="j[15][2]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img :title="j[14][3]"
+                        :src="j[15][3]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img :title="j[14][4]"
+                        :src="j[15][4]"
+                      >
+                    </v-avatar>
+                  </div>
+                  <div>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img :title="j[14][5]"
+                        :src="j[15][5]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img :title="j[14][6]"
+                        :src="j[15][6]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img :title="j[14][7]"
+                        :src="j[15][7]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img :title="j[14][8]"
+                        :src="j[15][8]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img :title="j[14][9]"
+                        :src="j[15][9]"
+                      >
+                    </v-avatar>
+                  </div>
+                </v-col>
+                <v-col
+                  class="grey--text text-truncate hidden-sm-and-down"
+                >
+                  <v-btn class="mx-2" fab dark color="indigo">
+                    <v-icon dark>mdi-plus</v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-expansion-panel-header>
+            <v-expansion-panel-header v-else color="#FFCDD2">
+              <v-col
+                class="text-no-wrap"
+                cols="5"
+                sm="2"
+              >
+                <strong v-html="j[4]"></strong><br><br>
+                <strong v-html="j[3]"></strong><br><br>
+                <strong v-html="j[2]"></strong><br><br>
+              </v-col>
+              <v-row
+                align="center"
+                class="spacer"
+                no-gutters
+              >
+                <v-col
+                  cols="4"
+                  sm="2"
+                  md="1"
+                >
+                  <v-avatar
+                    size="55px"
+                  >
+                    <img
+                      alt="Avatar"
+                      :src="j[1]"
+                    >
+                  </v-avatar>
+                  <v-avatar
+                    size="25px"
+                  >
+                    <img
+                      alt="Avatar"
+                      :src="j[16][0]"
+                    >
+                  </v-avatar>
+                  <v-avatar
+                    size="25px"
+                  >
+                    <img
+                      alt="Avatar"
+                      :src="j[16][1]"
+                    >
+                  </v-avatar>
+                  <v-avatar
+                    size="25px"
+                  >
+                    <img
+                      alt="Avatar"
+                      :src="j[6]"
+                    >
+                  </v-avatar>
+                  <v-avatar
+                    size="25px"
+                  >
+                    <img
+                      :src="j[8]"
+                    >
+                  </v-avatar>
+                </v-col>
+
+                <v-col
+                  class="hidden-xs-only"
+                  sm="5"
+                  md="3"
+                >
+                  <strong>{{j[9]}} / {{j[10]}} / {{j[11]}}</strong><br><br>
+                  <strong>평점 : {{ ((j[9] + j[11]) / j[10]).toFixed(2)}}</strong>
+                </v-col>
+
+                <v-col
+                  class="text-no-wrap"
+                  cols="5"
+                  sm="3"
+                >
+                  <strong>레벨 : {{j[12]}}</strong><br><br>
+                  <strong>cs : {{j[13]}}</strong>
+                </v-col>
+
+                <v-col
+                  class="grey--text text-truncate hidden-sm-and-down"
+                >
+                  <div>
+                    <v-avatar
+                      size="36px"
+                    >
+                      <img
+                        :src="j[17]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="36px"
+                    >
+                      <img
+                        :src="j[18]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="36px"
+                    >
+                      <img
+                        :src="j[19]"
+                      >
+                    </v-avatar>
+                  </div>
+                  <v-avatar
+                    size="36px"
+                  >
+                    <img
+                      :src="j[20]"
+                    >
+                  </v-avatar>
+                  <v-avatar
+                    size="36px"
+                  >
+                    <img
+                      :src="j[22]"
+                    >
+                  </v-avatar>
+                  <v-avatar
+                    size="36px"
+                  >
+                    <img
+                      :src="j[23]"
+                    >
+                  </v-avatar>
+                  <v-avatar
+                    size="36px"
+                  >
+                    <img
+                      :src="j[21]"
+                    >
+                  </v-avatar>
+                </v-col>
+                <v-col
+                  class="grey--text text-truncate hidden-sm-and-down"
+                >
+                  <div>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img :title="j[14][0]"
+                           :src="j[15][0]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img :title="j[14][1]"
+                           :src="j[15][1]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img :title="j[14][2]"
+                           :src="j[15][2]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img :title="j[14][3]"
+                           :src="j[15][3]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img :title="j[14][4]"
+                           :src="j[15][4]"
+                      >
+                    </v-avatar>
+                  </div>
+                  <div>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img :title="j[14][5]"
+                           :src="j[15][5]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img :title="j[14][6]"
+                           :src="j[15][6]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img :title="j[14][7]"
+                           :src="j[15][7]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img :title="j[14][8]"
+                           :src="j[15][8]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img :title="j[14][9]"
+                           :src="j[15][9]"
+                      >
+                    </v-avatar>
+                  </div>
+                </v-col>
+                <v-col
+                  class="grey--text text-truncate hidden-sm-and-down"
+                >
+                  <v-btn class="mx-2" fab dark color="indigo">
+                    <v-icon dark>mdi-plus</v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-expansion-panel-header>
+            <br>
+
+            <v-expansion-panel-content>
+              <v-divider></v-divider>
+              <v-card-text >빈칸입니다.</v-card-text>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
@@ -86,6 +537,20 @@ export default {
   computed: {
   },
   methods: {
+    detailGame20 (detail) {
+      let count=0
+      for (let i in detail) {
+        if
+      }
+    },
+    findCharacterName (champion) {
+      let file = championFile.data
+      for (let x in file) {
+        if (file[x].key === String(champion)) {
+          return file[x].name
+        }
+      }
+    },
     findCharacterId (champion) {
       let file = championFile.data
       for (let x in file) {
@@ -138,8 +603,9 @@ export default {
           for (let b of this.match) {
             await lolAPI.find_detail_match(b.gameId).then(response => {
               let array = []
+              array.push(this.findCharacterName(b.champion))
               array.push(this.findCharacterId(b.champion))
-              array.push(this.$moment(b.timestamp).format('YYYY-MM-DD HH:mm:SS'))
+              array.push(this.$moment(b.timestamp).format('MM-DD'))
               let data = response.data
               array.push(this.getDurationTime(data.gameDuration))
               // 해당 유저 아이디 값 구하기
@@ -219,6 +685,7 @@ export default {
                 }
               }
               this.detail.push(array)
+              console.log(this.detail)
             })
           }
         })
