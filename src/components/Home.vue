@@ -535,14 +535,17 @@ export default {
     }
   },
   computed: {
+    getName () {
+      return this.$route.params.name
+    }
   },
   methods: {
-    detailGame20 (detail) {
-      let count=0
-      for (let i in detail) {
-        if
-      }
-    },
+    // detailGame20 (detail) {
+    //   let count=0
+    //   for (let i in detail) {
+    //     if
+    //   }
+    // },
     findCharacterName (champion) {
       let file = championFile.data
       for (let x in file) {
@@ -593,7 +596,15 @@ export default {
         }
       }
     },
+    findGameType (gameType) {
+      if (gameType === 'CLASSIC') {
+        return '솔랭'
+      } else if (gameType === 'ARAM') {
+        return '무작위 총력전'
+      }
+    },
     async find_id () {
+      this.detail = []
       lolAPI.find_id(this.name).then(response => {
         this.data = response.data.id
         let accountId = response.data.accountId
@@ -610,15 +621,15 @@ export default {
               array.push(this.getDurationTime(data.gameDuration))
               // 해당 유저 아이디 값 구하기
               let id = ''
-              for (let i = 1; i < data.participantIdentities.length; i++) {
-                if (data.participantIdentities[i].player.summonerName === this.name) {
+              for (let i = 0; i < 10; i++) {
+                if (data.participantIdentities[i].player.summonerName.replace(/ /g, '') === this.name) {
                   id = data.participantIdentities[i].participantId
                   break
                 }
               }
               // 아이디 값으로 승,패 구하기
               for (let i = 0; i < 2; i++) {
-                if (data.teams[i].teamId === data.participants[id].teamId) {
+                if (data.teams[i].teamId === data.participants[id - 1].teamId) {
                   if (data.teams[i].win === 'Win') {
                     array.push('승리')
                   } else {
@@ -685,12 +696,140 @@ export default {
                 }
               }
               this.detail.push(array)
-              console.log(this.detail)
             })
           }
         })
 
         lolAPI.find_league(this.data).then(response => {
+          if (response.data[0]) {
+            if (response.data[0].queueType === 'RANKED_FLEX_SR') {
+              this.free = response.data[0]
+              if (response.data.length === 1) {
+                this.solo = ''
+              }
+            }
+            if (response.data[0].queueType === 'RANKED_SOLO_5x5') {
+              this.solo = response.data[0]
+              if (response.data.length === 1) {
+                this.free = ''
+              }
+            }
+          } else if (response.data[1]) {
+            if (response.data[1].queueType === 'RANKED_FLEX_SR') {
+              this.free = response.data[1]
+            }
+            if (response.data[1].queueType === 'RANKED_SOLO_5x5') {
+              this.solo = response.data[1]
+            }
+          }
+        })
+      }).catch(error => {
+        if (error.response) {
+          console.log(error.response)
+          this.message = '찾을 수 없는 사용자입니다.'
+        }
+      })
+    }
+  },
+  async mounted () {
+    lolAPI.find_id(this.getName).then(response => {
+      this.data = response.data.id
+      let accountId = response.data.accountId
+
+      lolAPI.find_match(accountId).then(async response => {
+        this.match = response.data.matches
+        for (let b of this.match) {
+          await lolAPI.find_detail_match(b.gameId).then(response => {
+            let array = []
+            array.push(this.findCharacterName(b.champion))
+            array.push(this.findCharacterId(b.champion))
+            array.push(this.$moment(b.timestamp).format('MM-DD'))
+            let data = response.data
+            console.log(data)
+            array.push(this.getDurationTime(data.gameDuration))
+            // 해당 유저 아이디 값 구하기
+            let id = ''
+            for (let i = 0; i < 10; i++) {
+              if (data.participantIdentities[i].player.summonerName.replace(/ /g, '') === this.getName) {
+                id = data.participantIdentities[i].participantId
+                break
+              }
+            }
+            // 아이디 값으로 승,패 구하기
+            for (let i = 0; i < 2; i++) {
+              if (data.teams[i].teamId === data.participants[id - 1].teamId) {
+                if (data.teams[i].win === 'Win') {
+                  array.push('승리')
+                } else {
+                  array.push('패배')
+                }
+              }
+            }
+            // 스펠 1 구하기
+            let file = spellFile.data
+            for (let i in file) {
+              if (file[i].key === String(data.participants[id - 1].spell1Id)) {
+                array.push(file[i].name)
+                array.push('static/spell/' + file[i].id + '.png')
+                break
+              }
+            }
+            // 스펠 2 구하기
+            for (let i in file) {
+              if (file[i].key === String(data.participants[id - 1].spell2Id)) {
+                array.push(file[i].name)
+                array.push('static/spell/' + file[i].id + '.png')
+                break
+              }
+            }
+            array.push(data.participants[id - 1].stats.kills)
+            array.push(data.participants[id - 1].stats.deaths)
+            array.push(data.participants[id - 1].stats.assists)
+            array.push(data.participants[id - 1].stats.champLevel)
+            array.push(data.participants[id - 1].stats.totalMinionsKilled)
+            // 전체 인원 닉네임 구하기
+            let nameArray = []
+            for (let i in data.participantIdentities) {
+              nameArray.push(data.participantIdentities[i].player.summonerName)
+            }
+            array.push(nameArray)
+            // 전체 인원 챔피언 구하기
+            let champArray = []
+            for (let i in data.participants) {
+              champArray.push(this.findCharacterId(data.participants[i].championId))
+            }
+            array.push(champArray)
+            // 룬 구하기
+            let runes = []
+            runes.push(this.findMainRunes(data.participants[id - 1].stats.perkPrimaryStyle, data.participants[id - 1].stats.perk0))
+            runes.push(this.findRunes(data.participants[id - 1].stats.perkSubStyle))
+            array.push(runes)
+            // 아이템 구하기
+            let Ifile = itemFile.data
+            for (let i in Ifile) {
+              if (i === String(data.participants[id - 1].stats.item0)) {
+                array.push('static/item/' + Ifile[i].image.full)
+              } else if (i === String(data.participants[id - 1].stats.item1)) {
+                array.push('static/item/' + Ifile[i].image.full)
+              } else if (i === String(data.participants[id - 1].stats.item2)) {
+                array.push('static/item/' + Ifile[i].image.full)
+              } else if (i === String(data.participants[id - 1].stats.item3)) {
+                array.push('static/item/' + Ifile[i].image.full)
+              } else if (i === String(data.participants[id - 1].stats.item4)) {
+                array.push('static/item/' + Ifile[i].image.full)
+              } else if (i === String(data.participants[id - 1].stats.item5)) {
+                array.push('static/item/' + Ifile[i].image.full)
+              } else if (i === String(data.participants[id - 1].stats.item6)) {
+                array.push('static/item/' + Ifile[i].image.full)
+              }
+            }
+            // array.push(this.findGameType(data.gameMode))
+            this.detail.push(array)
+          })
+        }
+      })
+      lolAPI.find_league(this.data).then(response => {
+        if (response.data[0]) {
           if (response.data[0].queueType === 'RANKED_FLEX_SR') {
             this.free = response.data[0]
             if (response.data.length === 1) {
@@ -703,20 +842,21 @@ export default {
               this.free = ''
             }
           }
+        } if (response.data[1]) {
           if (response.data[1].queueType === 'RANKED_FLEX_SR') {
             this.free = response.data[1]
           }
           if (response.data[1].queueType === 'RANKED_SOLO_5x5') {
             this.solo = response.data[1]
           }
-        })
-      }).catch(error => {
-        if (error.response) {
-          console.log(error.response)
-          this.message = '찾을 수 없는 사용자입니다.'
         }
       })
-    }
+    }).catch(error => {
+      if (error.response) {
+        console.log(error.response)
+        this.message = '찾을 수 없는 사용자입니다.'
+      }
+    })
   }
 }
 </script>

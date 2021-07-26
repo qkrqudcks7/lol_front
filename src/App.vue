@@ -1,56 +1,57 @@
 <template>
-  <v-app>
-    <nav class="navbar navbar-expand navbar-dark bg-dark">
-      <div class="navbar-brand">Park.GG</div>
-      <div class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a href="/" class="nav-link">
-            <font-awesome-icon icon="home" /> Home
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="/champ" class="nav-link">
-            <font-awesome-icon icon="pen" /> 챔피언
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="/boardlist" class="nav-link">
-            <font-awesome-icon icon="pen" /> 게시판
-          </a>
-        </li>
-      </div>
-      <div class="navbar-nav ml-auto" v-if="!currentUser">
-        <li class="nav-item">
-          <a href="/register" class="nav-link">
-            <font-awesome-icon icon="user-plus" /> Sign Up
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="/login" class="nav-link">
-            <font-awesome-icon icon="sign-in-alt" /> Login
-          </a>
-        </li>
-      </div>
+  <div id="App">
+    <v-app>
+      <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <div class="navbar-brand">Park.GG</div>
+        <div class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a href="/" class="nav-link">
+              <font-awesome-icon icon="home" /> Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/champ" class="nav-link">
+              <font-awesome-icon icon="pen" /> 챔피언
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/boardlist" class="nav-link">
+              <font-awesome-icon icon="pen" /> 게시판
+            </a>
+          </li>
+        </div>
+        <div class="navbar-nav ml-auto" v-if="!currentUser">
+          <li class="nav-item">
+            <a href="/register" class="nav-link">
+              <font-awesome-icon icon="user-plus" /> Sign Up
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/login" class="nav-link">
+              <font-awesome-icon icon="sign-in-alt" /> Login
+            </a>
+          </li>
+        </div>
 
-      <div class="navbar-nav ml-auto" v-if="currentUser">
-        <li class="nav-item">
-          <a href="/profile" class="nav-link">
-            <font-awesome-icon icon="user" />
-            {{currentUser.username}}
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href class="nav-link" @click="logOut">
-            <font-awesome-icon icon="sign-out-alt" /> LogOut
-          </a>
-        </li>
-      </div>
-    </nav>
-
-    <v-main>
-      <router-view/>
-    </v-main>
-  </v-app>
+        <div class="navbar-nav ml-auto" v-if="currentUser">
+          <li class="nav-item">
+            <a href="/profile" class="nav-link">
+              <font-awesome-icon icon="user" />
+              {{currentUser.username}}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href class="nav-link" @click="logOut">
+              <font-awesome-icon icon="sign-out-alt" /> LogOut
+            </a>
+          </li>
+        </div>
+      </nav>
+      <v-main>
+        <router-view/>
+      </v-main>
+    </v-app>
+  </div>
 </template>
 
 <script>
