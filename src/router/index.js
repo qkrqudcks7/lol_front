@@ -6,6 +6,7 @@ import Profile from '../components/Profile'
 import Champ from '../components/Champ'
 import DetailChamp from '../components/DetailChamp'
 import Main from '../components/Main'
+import DetailMatch from '../components/DetailMatch'
 
 Vue.use(Router)
 
@@ -41,6 +42,11 @@ export default new Router({
       path: '/home',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/detailMatch',
+      name: 'detailMatch',
+      component: DetailMatch
     }
   ]
 })

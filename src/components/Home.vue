@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div>
-      <input type="text" v-model="name">
-      <button @click="find_id">검색</button>
+    <div class="col-md-6 offset-md-3">
+      <input type="text" class="form-control" v-model="name" @keyup.enter="find_id">
+      <v-btn block color="secondary" dark @click="find_id">PARK.GG</v-btn>
     </div>
-    <div>{{name}}</div>
+    <div>{{clientName}}</div>
     <hr>
     <v-container fluid>
       <v-row>
@@ -60,7 +60,7 @@
             v-for="(j,index) in detail" :key="index"
             hide-actions
           >
-            <v-expansion-panel-header v-if="j[4] === '승리'" color="#BBDEFB">
+            <v-expansion-panel-header :color="j[4] === '승리' ? '#BBDEFB' : '#FFCDD2'">
               <v-col
                 class="text-no-wrap"
                 cols="5"
@@ -147,21 +147,21 @@
                     size="36px"
                   >
                     <img
-                      :src="j[17]"
+                      :src="j[17][0]"
                     >
                   </v-avatar>
                   <v-avatar
                     size="36px"
                   >
                     <img
-                      :src="j[18]"
+                      :src="j[17][1]"
                     >
                   </v-avatar>
                   <v-avatar
                     size="36px"
                   >
                     <img
-                      :src="j[19]"
+                      :src="j[17][2]"
                     >
                   </v-avatar>
                   </div>
@@ -169,28 +169,28 @@
                     size="36px"
                   >
                     <img
-                      :src="j[20]"
+                      :src="j[17][3]"
                     >
                   </v-avatar>
                   <v-avatar
                     size="36px"
                   >
                     <img
-                      :src="j[22]"
+                      :src="j[17][5]"
                     >
                   </v-avatar>
                   <v-avatar
                     size="36px"
                   >
                     <img
-                      :src="j[23]"
+                      :src="j[17][6]"
                     >
                   </v-avatar>
                   <v-avatar
                     size="36px"
                   >
                     <img
-                      :src="j[21]"
+                      :src="j[17][4]"
                     >
                   </v-avatar>
                 </v-col>
@@ -275,228 +275,7 @@
                 <v-col
                   class="grey--text text-truncate hidden-sm-and-down"
                 >
-                  <v-btn class="mx-2" fab dark color="indigo">
-                    <v-icon dark>mdi-plus</v-icon>
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-expansion-panel-header>
-            <v-expansion-panel-header v-else color="#FFCDD2">
-              <v-col
-                class="text-no-wrap"
-                cols="5"
-                sm="2"
-              >
-                <strong v-html="j[4]"></strong><br><br>
-                <strong v-html="j[3]"></strong><br><br>
-                <strong v-html="j[2]"></strong><br><br>
-              </v-col>
-              <v-row
-                align="center"
-                class="spacer"
-                no-gutters
-              >
-                <v-col
-                  cols="4"
-                  sm="2"
-                  md="1"
-                >
-                  <v-avatar
-                    size="55px"
-                  >
-                    <img
-                      alt="Avatar"
-                      :src="j[1]"
-                    >
-                  </v-avatar>
-                  <v-avatar
-                    size="25px"
-                  >
-                    <img
-                      alt="Avatar"
-                      :src="j[16][0]"
-                    >
-                  </v-avatar>
-                  <v-avatar
-                    size="25px"
-                  >
-                    <img
-                      alt="Avatar"
-                      :src="j[16][1]"
-                    >
-                  </v-avatar>
-                  <v-avatar
-                    size="25px"
-                  >
-                    <img
-                      alt="Avatar"
-                      :src="j[6]"
-                    >
-                  </v-avatar>
-                  <v-avatar
-                    size="25px"
-                  >
-                    <img
-                      :src="j[8]"
-                    >
-                  </v-avatar>
-                </v-col>
-
-                <v-col
-                  class="hidden-xs-only"
-                  sm="5"
-                  md="3"
-                >
-                  <strong>{{j[9]}} / {{j[10]}} / {{j[11]}}</strong><br><br>
-                  <strong>평점 : {{ ((j[9] + j[11]) / j[10]).toFixed(2)}}</strong>
-                </v-col>
-
-                <v-col
-                  class="text-no-wrap"
-                  cols="5"
-                  sm="3"
-                >
-                  <strong>레벨 : {{j[12]}}</strong><br><br>
-                  <strong>cs : {{j[13]}}</strong>
-                </v-col>
-
-                <v-col
-                  class="grey--text text-truncate hidden-sm-and-down"
-                >
-                  <div>
-                    <v-avatar
-                      size="36px"
-                    >
-                      <img
-                        :src="j[17]"
-                      >
-                    </v-avatar>
-                    <v-avatar
-                      size="36px"
-                    >
-                      <img
-                        :src="j[18]"
-                      >
-                    </v-avatar>
-                    <v-avatar
-                      size="36px"
-                    >
-                      <img
-                        :src="j[19]"
-                      >
-                    </v-avatar>
-                  </div>
-                  <v-avatar
-                    size="36px"
-                  >
-                    <img
-                      :src="j[20]"
-                    >
-                  </v-avatar>
-                  <v-avatar
-                    size="36px"
-                  >
-                    <img
-                      :src="j[22]"
-                    >
-                  </v-avatar>
-                  <v-avatar
-                    size="36px"
-                  >
-                    <img
-                      :src="j[23]"
-                    >
-                  </v-avatar>
-                  <v-avatar
-                    size="36px"
-                  >
-                    <img
-                      :src="j[21]"
-                    >
-                  </v-avatar>
-                </v-col>
-                <v-col
-                  class="grey--text text-truncate hidden-sm-and-down"
-                >
-                  <div>
-                    <v-avatar
-                      size="25px"
-                    >
-                      <img :title="j[14][0]"
-                           :src="j[15][0]"
-                      >
-                    </v-avatar>
-                    <v-avatar
-                      size="25px"
-                    >
-                      <img :title="j[14][1]"
-                           :src="j[15][1]"
-                      >
-                    </v-avatar>
-                    <v-avatar
-                      size="25px"
-                    >
-                      <img :title="j[14][2]"
-                           :src="j[15][2]"
-                      >
-                    </v-avatar>
-                    <v-avatar
-                      size="25px"
-                    >
-                      <img :title="j[14][3]"
-                           :src="j[15][3]"
-                      >
-                    </v-avatar>
-                    <v-avatar
-                      size="25px"
-                    >
-                      <img :title="j[14][4]"
-                           :src="j[15][4]"
-                      >
-                    </v-avatar>
-                  </div>
-                  <div>
-                    <v-avatar
-                      size="25px"
-                    >
-                      <img :title="j[14][5]"
-                           :src="j[15][5]"
-                      >
-                    </v-avatar>
-                    <v-avatar
-                      size="25px"
-                    >
-                      <img :title="j[14][6]"
-                           :src="j[15][6]"
-                      >
-                    </v-avatar>
-                    <v-avatar
-                      size="25px"
-                    >
-                      <img :title="j[14][7]"
-                           :src="j[15][7]"
-                      >
-                    </v-avatar>
-                    <v-avatar
-                      size="25px"
-                    >
-                      <img :title="j[14][8]"
-                           :src="j[15][8]"
-                      >
-                    </v-avatar>
-                    <v-avatar
-                      size="25px"
-                    >
-                      <img :title="j[14][9]"
-                           :src="j[15][9]"
-                      >
-                    </v-avatar>
-                  </div>
-                </v-col>
-                <v-col
-                  class="grey--text text-truncate hidden-sm-and-down"
-                >
-                  <v-btn class="mx-2" fab dark color="indigo">
+                  <v-btn class="mx-2" fab dark color="primary" @click="detailPage">
                     <v-icon dark>mdi-plus</v-icon>
                   </v-btn>
                 </v-col>
@@ -506,12 +285,319 @@
 
             <v-expansion-panel-content>
               <v-divider></v-divider>
-              <v-card-text >빈칸입니다.</v-card-text>
+              <v-container fluid>
+                <v-row justify="center">
+                  <v-expansion-panels popout>
+                    <v-expansion-panel
+                      v-for="(x,index) in j[18]" :key="index+'a'"
+                      hide-actions
+                    >
+                      <v-expansion-panel-header :color="x[3] === '승리' ? '#E3F2FD' : '#FFEBEE'">
+                        <v-col
+                          class="text-no-wrap"
+                          cols="5"
+                          sm="2"
+                        >
+                          <strong v-html="x[2]"></strong><br><br>
+                        </v-col>
+                        <v-row
+                          align="center"
+                          class="spacer"
+                          no-gutters
+                        >
+                          <v-col
+                            cols="4"
+                            sm="2"
+                            md="1"
+                          >
+                            <v-avatar
+                              size="50px"
+                            >
+                              <img
+                                alt="Avatar"
+                                :src="x[1]"
+                              >
+                            </v-avatar>
+                            <v-avatar
+                              size="25px"
+                            >
+                              <img
+                                alt="Avatar"
+                                :src="x[5]"
+                              >
+                            </v-avatar>
+                            <v-avatar
+                              size="25px"
+                            >
+                              <img
+                                alt="Avatar"
+                                :src="x[7]"
+                              >
+                            </v-avatar>
+                            <v-avatar
+                              size="25px"
+                            >
+                              <img
+                                alt="Avatar"
+                                :src="x[17]"
+                              >
+                            </v-avatar>
+                            <v-avatar
+                              size="25px"
+                            >
+                              <img
+                                :src="x[18]"
+                              >
+                            </v-avatar>
+                          </v-col>
+
+                          <v-col
+                            class="hidden-xs-only"
+                            sm="5"
+                            md="3"
+                          >
+                            <strong>{{x[8]}} / {{x[9]}} / {{x[10]}}</strong><br><br>
+                            <strong>평점 : {{ ((x[8] + x[10]) / x[9]).toFixed(2)}}</strong>
+                          </v-col>
+
+                          <v-col
+                            class="text-no-wrap"
+                            cols="5"
+                            sm="3"
+                          >
+                            <strong>피해량 : {{x[13]}}</strong><br><br>
+                            <strong>cs : {{x[12]}}</strong>
+                          </v-col>
+
+                          <v-col
+                            class="grey--text text-truncate hidden-sm-and-down"
+                          >
+                            <div>
+                              <v-avatar
+                                size="36px"
+                              >
+                                <img
+                                  :src="x[19][0]"
+                                >
+                              </v-avatar>
+                              <v-avatar
+                                size="36px"
+                              >
+                                <img
+                                  :src="x[19][1]"
+                                >
+                              </v-avatar>
+                              <v-avatar
+                                size="36px"
+                              >
+                                <img
+                                  :src="x[19][2]"
+                                >
+                              </v-avatar>
+                            </div>
+                            <v-avatar
+                              size="36px"
+                            >
+                              <img
+                                :src="x[19][3]"
+                              >
+                            </v-avatar>
+                            <v-avatar
+                              size="36px"
+                            >
+                              <img
+                                :src="x[19][5]"
+                              >
+                            </v-avatar>
+                            <v-avatar
+                              size="36px"
+                            >
+                              <img
+                                :src="x[19][6]"
+                              >
+                            </v-avatar>
+                            <v-avatar
+                              size="36px"
+                            >
+                              <img
+                                :src="x[19][4]"
+                              >
+                            </v-avatar>
+                          </v-col>
+                          <v-col
+                            class="grey--text text-truncate hidden-sm-and-down"
+                          >
+                            <strong>제어와드 : {{x[14]}}</strong><br><br>
+                            <strong>설치와드 : {{x[15]}}</strong><br><br>
+                            <strong>제거와드 : {{x[16]}}</strong>
+                          </v-col>
+                        </v-row>
+                      </v-expansion-panel-header>
+                    </v-expansion-panel>
+                  </v-expansion-panels>
+                </v-row>
+              </v-container>
+              <div><br><br></div>
+              <v-container fluid>
+                <v-row justify="center">
+                  <v-expansion-panels popout>
+                    <v-expansion-panel
+                      v-for="(x,index) in j[19]" :key="index+'b'"
+                      hide-actions
+                    >
+                      <v-expansion-panel-header :color="x[3] === '승리' ? '#E3F2FD' : '#FFEBEE'">
+                        <v-col
+                          class="text-no-wrap"
+                          cols="5"
+                          sm="2"
+                        >
+                          <strong v-html="x[2]"></strong><br><br>
+                        </v-col>
+                        <v-row
+                          align="center"
+                          class="spacer"
+                          no-gutters
+                        >
+                          <v-col
+                            cols="4"
+                            sm="2"
+                            md="1"
+                          >
+                            <v-avatar
+                              size="50px"
+                            >
+                              <img
+                                alt="Avatar"
+                                :src="x[1]"
+                              >
+                            </v-avatar>
+                            <v-avatar
+                              size="25px"
+                            >
+                              <img
+                                alt="Avatar"
+                                :src="x[5]"
+                              >
+                            </v-avatar>
+                            <v-avatar
+                              size="25px"
+                            >
+                              <img
+                                alt="Avatar"
+                                :src="x[7]"
+                              >
+                            </v-avatar>
+                            <v-avatar
+                              size="25px"
+                            >
+                              <img
+                                alt="Avatar"
+                                :src="x[17]"
+                              >
+                            </v-avatar>
+                            <v-avatar
+                              size="25px"
+                            >
+                              <img
+                                :src="x[18]"
+                              >
+                            </v-avatar>
+                          </v-col>
+
+                          <v-col
+                            class="hidden-xs-only"
+                            sm="5"
+                            md="3"
+                          >
+                            <strong>{{x[8]}} / {{x[9]}} / {{x[10]}}</strong><br><br>
+                            <strong>평점 : {{ ((x[8] + x[10]) / x[9]).toFixed(2)}}</strong>
+                          </v-col>
+
+                          <v-col
+                            class="text-no-wrap"
+                            cols="5"
+                            sm="3"
+                          >
+                            <strong>피해량 : {{x[13]}}</strong><br><br>
+                            <strong>cs : {{x[12]}}</strong>
+                          </v-col>
+
+                          <v-col
+                            class="grey--text text-truncate hidden-sm-and-down"
+                          >
+                            <div>
+                              <v-avatar
+                                size="36px"
+                              >
+                                <img
+                                  :src="x[19][0]"
+                                >
+                              </v-avatar>
+                              <v-avatar
+                                size="36px"
+                              >
+                                <img
+                                  :src="x[19][1]"
+                                >
+                              </v-avatar>
+                              <v-avatar
+                                size="36px"
+                              >
+                                <img
+                                  :src="x[19][2]"
+                                >
+                              </v-avatar>
+                            </div>
+                            <v-avatar
+                              size="36px"
+                            >
+                              <img
+                                :src="x[19][3]"
+                              >
+                            </v-avatar>
+                            <v-avatar
+                              size="36px"
+                            >
+                              <img
+                                :src="x[19][5]"
+                              >
+                            </v-avatar>
+                            <v-avatar
+                              size="36px"
+                            >
+                              <img
+                                :src="x[19][6]"
+                              >
+                            </v-avatar>
+                            <v-avatar
+                              size="36px"
+                            >
+                              <img
+                                :src="x[19][4]"
+                              >
+                            </v-avatar>
+                          </v-col>
+                          <v-col
+                            class="grey--text text-truncate hidden-sm-and-down"
+                          >
+                            <strong>제어와드 : {{x[14]}}</strong><br><br>
+                            <strong>설치와드 : {{x[15]}}</strong><br><br>
+                            <strong>제거와드 : {{x[16]}}</strong>
+                          </v-col>
+                        </v-row>
+                      </v-expansion-panel-header>
+                    </v-expansion-panel>
+                  </v-expansion-panels>
+                </v-row>
+              </v-container>
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
       </v-row>
     </v-container>
+    <div class="col-md-6 offset-md-3">
+      <v-btn block color="secondary" dark>나머지 전적 보기</v-btn>
+    </div>
   </div>
 </template>
 
@@ -525,6 +611,7 @@ export default {
   name: 'Home',
   data () {
     return {
+      clientName: '',
       name: '',
       message: '',
       data: '',
@@ -536,7 +623,7 @@ export default {
   },
   computed: {
     getName () {
-      return this.$route.params.name
+      return this.$route.params.name.replace(/ /g, '')
     }
   },
   methods: {
@@ -546,6 +633,9 @@ export default {
     //     if
     //   }
     // },
+    detailPage () {
+      this.$router.push({name: 'detailMatch'})
+    },
     findCharacterName (champion) {
       let file = championFile.data
       for (let x in file) {
@@ -605,7 +695,8 @@ export default {
     },
     async find_id () {
       this.detail = []
-      lolAPI.find_id(this.name).then(response => {
+      lolAPI.find_id(this.name.replace(/ /g, '')).then(response => {
+        this.clientName = response.data.name
         this.data = response.data.id
         let accountId = response.data.accountId
 
@@ -618,11 +709,12 @@ export default {
               array.push(this.findCharacterId(b.champion))
               array.push(this.$moment(b.timestamp).format('MM-DD'))
               let data = response.data
+              console.log(data)
               array.push(this.getDurationTime(data.gameDuration))
               // 해당 유저 아이디 값 구하기
               let id = ''
               for (let i = 0; i < 10; i++) {
-                if (data.participantIdentities[i].player.summonerName.replace(/ /g, '') === this.name) {
+                if (data.participantIdentities[i].player.summonerName.replace(/ /g, '') === this.name.replace(/ /g, '')) {
                   id = data.participantIdentities[i].participantId
                   break
                 }
@@ -678,23 +770,25 @@ export default {
               array.push(runes)
               // 아이템 구하기
               let Ifile = itemFile.data
+              let item = []
               for (let i in Ifile) {
                 if (i === String(data.participants[id - 1].stats.item0)) {
-                  array.push('static/item/' + Ifile[i].image.full)
+                  item.push('static/item/' + Ifile[i].image.full)
                 } else if (i === String(data.participants[id - 1].stats.item1)) {
-                  array.push('static/item/' + Ifile[i].image.full)
+                  item.push('static/item/' + Ifile[i].image.full)
                 } else if (i === String(data.participants[id - 1].stats.item2)) {
-                  array.push('static/item/' + Ifile[i].image.full)
+                  item.push('static/item/' + Ifile[i].image.full)
                 } else if (i === String(data.participants[id - 1].stats.item3)) {
-                  array.push('static/item/' + Ifile[i].image.full)
+                  item.push('static/item/' + Ifile[i].image.full)
                 } else if (i === String(data.participants[id - 1].stats.item4)) {
-                  array.push('static/item/' + Ifile[i].image.full)
+                  item.push('static/item/' + Ifile[i].image.full)
                 } else if (i === String(data.participants[id - 1].stats.item5)) {
-                  array.push('static/item/' + Ifile[i].image.full)
+                  item.push('static/item/' + Ifile[i].image.full)
                 } else if (i === String(data.participants[id - 1].stats.item6)) {
-                  array.push('static/item/' + Ifile[i].image.full)
+                  item.push('static/item/' + Ifile[i].image.full)
                 }
               }
+              array.push(item)
               this.detail.push(array)
             })
           }
@@ -733,6 +827,7 @@ export default {
   },
   async mounted () {
     lolAPI.find_id(this.getName).then(response => {
+      this.clientName = response.data.name
       this.data = response.data.id
       let accountId = response.data.accountId
 
@@ -806,25 +901,170 @@ export default {
             array.push(runes)
             // 아이템 구하기
             let Ifile = itemFile.data
+            let item = []
             for (let i in Ifile) {
               if (i === String(data.participants[id - 1].stats.item0)) {
-                array.push('static/item/' + Ifile[i].image.full)
+                item.push('static/item/' + Ifile[i].image.full)
               } else if (i === String(data.participants[id - 1].stats.item1)) {
-                array.push('static/item/' + Ifile[i].image.full)
+                item.push('static/item/' + Ifile[i].image.full)
               } else if (i === String(data.participants[id - 1].stats.item2)) {
-                array.push('static/item/' + Ifile[i].image.full)
+                item.push('static/item/' + Ifile[i].image.full)
               } else if (i === String(data.participants[id - 1].stats.item3)) {
-                array.push('static/item/' + Ifile[i].image.full)
+                item.push('static/item/' + Ifile[i].image.full)
               } else if (i === String(data.participants[id - 1].stats.item4)) {
-                array.push('static/item/' + Ifile[i].image.full)
+                item.push('static/item/' + Ifile[i].image.full)
               } else if (i === String(data.participants[id - 1].stats.item5)) {
-                array.push('static/item/' + Ifile[i].image.full)
+                item.push('static/item/' + Ifile[i].image.full)
               } else if (i === String(data.participants[id - 1].stats.item6)) {
-                array.push('static/item/' + Ifile[i].image.full)
+                item.push('static/item/' + Ifile[i].image.full)
               }
             }
-            // array.push(this.findGameType(data.gameMode))
+            array.push(item)
+            let detail1 = []
+            // 10명 디테일 전적
+            for (let i = 0; i < 5; i++) {
+              let temp = []
+              temp.push(this.findCharacterName(data.participants[i].championId))
+              temp.push(this.findCharacterId(data.participants[i].championId))
+              temp.push(data.participantIdentities[i].player.summonerName)
+              let Did = data.participantIdentities[i].participantId
+
+              // 아이디 값으로 승,패 구하기
+              for (let j = 0; j < 2; j++) {
+                if (data.teams[j].teamId === data.participants[Did - 1].teamId) {
+                  if (data.teams[j].win === 'Win') {
+                    temp.push('승리')
+                  } else {
+                    temp.push('패배')
+                  }
+                }
+              }
+              // 스펠 1 구하기
+              let file = spellFile.data
+              for (let x in file) {
+                if (file[x].key === String(data.participants[Did - 1].spell1Id)) {
+                  temp.push(file[x].name)
+                  temp.push('static/spell/' + file[x].id + '.png')
+                  break
+                }
+              }
+              // 스펠 2 구하기
+              for (let x in file) {
+                if (file[x].key === String(data.participants[Did - 1].spell2Id)) {
+                  temp.push(file[x].name)
+                  temp.push('static/spell/' + file[x].id + '.png')
+                  break
+                }
+              }
+              temp.push(data.participants[Did - 1].stats.kills)
+              temp.push(data.participants[Did - 1].stats.deaths)
+              temp.push(data.participants[Did - 1].stats.assists)
+              temp.push(data.participants[Did - 1].stats.champLevel)
+              temp.push(data.participants[Did - 1].stats.totalMinionsKilled)
+              temp.push(data.participants[Did - 1].stats.totalDamageDealtToChampions)
+              temp.push(data.participants[Did - 1].stats.visionWardsBoughtInGame)
+              temp.push(data.participants[Did - 1].stats.wardsKilled)
+              temp.push(data.participants[Did - 1].stats.wardsPlaced)
+
+              temp.push(this.findMainRunes(data.participants[Did - 1].stats.perkPrimaryStyle, data.participants[Did - 1].stats.perk0))
+              temp.push(this.findRunes(data.participants[Did - 1].stats.perkSubStyle))
+
+              let Ifile = itemFile.data
+              let item = []
+              for (let x in Ifile) {
+                if (x === String(data.participants[Did - 1].stats.item0)) {
+                  item.push('static/item/' + Ifile[x].image.full)
+                } else if (x === String(data.participants[Did - 1].stats.item1)) {
+                  item.push('static/item/' + Ifile[x].image.full)
+                } else if (x === String(data.participants[Did - 1].stats.item2)) {
+                  item.push('static/item/' + Ifile[x].image.full)
+                } else if (x === String(data.participants[Did - 1].stats.item3)) {
+                  item.push('static/item/' + Ifile[x].image.full)
+                } else if (x === String(data.participants[Did - 1].stats.item4)) {
+                  item.push('static/item/' + Ifile[x].image.full)
+                } else if (x === String(data.participants[Did - 1].stats.item5)) {
+                  item.push('static/item/' + Ifile[x].image.full)
+                } else if (x === String(data.participants[Did - 1].stats.item6)) {
+                  item.push('static/item/' + Ifile[x].image.full)
+                }
+              }
+              temp.push(item)
+              detail1.push(temp)
+            }
+            let detail2 = []
+            for (let i = 5; i < 10; i++) {
+              let temp = []
+              temp.push(this.findCharacterName(data.participants[i].championId))
+              temp.push(this.findCharacterId(data.participants[i].championId))
+              temp.push(data.participantIdentities[i].player.summonerName)
+              let Did = data.participantIdentities[i].participantId
+
+              // 아이디 값으로 승,패 구하기
+              for (let j = 0; j < 2; j++) {
+                if (data.teams[j].teamId === data.participants[Did - 1].teamId) {
+                  if (data.teams[j].win === 'Win') {
+                    temp.push('승리')
+                  } else {
+                    temp.push('패배')
+                  }
+                }
+              }
+              // 스펠 1 구하기
+              let file = spellFile.data
+              for (let x in file) {
+                if (file[x].key === String(data.participants[Did - 1].spell1Id)) {
+                  temp.push(file[x].name)
+                  temp.push('static/spell/' + file[x].id + '.png')
+                  break
+                }
+              }
+              // 스펠 2 구하기
+              for (let x in file) {
+                if (file[x].key === String(data.participants[Did - 1].spell2Id)) {
+                  temp.push(file[x].name)
+                  temp.push('static/spell/' + file[x].id + '.png')
+                  break
+                }
+              }
+              temp.push(data.participants[Did - 1].stats.kills)
+              temp.push(data.participants[Did - 1].stats.deaths)
+              temp.push(data.participants[Did - 1].stats.assists)
+              temp.push(data.participants[Did - 1].stats.champLevel)
+              temp.push(data.participants[Did - 1].stats.totalMinionsKilled)
+              temp.push(data.participants[Did - 1].stats.totalDamageDealtToChampions)
+              temp.push(data.participants[Did - 1].stats.visionWardsBoughtInGame)
+              temp.push(data.participants[Did - 1].stats.wardsKilled)
+              temp.push(data.participants[Did - 1].stats.wardsPlaced)
+
+              temp.push(this.findMainRunes(data.participants[Did - 1].stats.perkPrimaryStyle, data.participants[Did - 1].stats.perk0))
+              temp.push(this.findRunes(data.participants[Did - 1].stats.perkSubStyle))
+
+              let Ifile = itemFile.data
+              let item = []
+              for (let x in Ifile) {
+                if (x === String(data.participants[Did - 1].stats.item0)) {
+                  item.push('static/item/' + Ifile[x].image.full)
+                } else if (x === String(data.participants[Did - 1].stats.item1)) {
+                  item.push('static/item/' + Ifile[x].image.full)
+                } else if (x === String(data.participants[Did - 1].stats.item2)) {
+                  item.push('static/item/' + Ifile[x].image.full)
+                } else if (x === String(data.participants[Did - 1].stats.item3)) {
+                  item.push('static/item/' + Ifile[x].image.full)
+                } else if (x === String(data.participants[Did - 1].stats.item4)) {
+                  item.push('static/item/' + Ifile[x].image.full)
+                } else if (x === String(data.participants[Did - 1].stats.item5)) {
+                  item.push('static/item/' + Ifile[x].image.full)
+                } else if (x === String(data.participants[Did - 1].stats.item6)) {
+                  item.push('static/item/' + Ifile[x].image.full)
+                }
+              }
+              temp.push(item)
+              detail2.push(temp)
+            }
+            array.push(detail1)
+            array.push(detail2)
             this.detail.push(array)
+            console.log(this.detail)
           })
         }
       })
