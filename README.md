@@ -1,5 +1,8 @@
 # LOL 전적 검색 프로젝트 Front ( Vue.js)
 
+![image](https://user-images.githubusercontent.com/66015002/127276085-c0160018-31c6-427b-a547-ac77230f3d9d.png)
+
+
 ## :imp: CORS 정책 해결하기
 
 ### :question: CORS란?
