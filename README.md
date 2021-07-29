@@ -2,6 +2,8 @@
 
 ![image](https://user-images.githubusercontent.com/66015002/127276085-c0160018-31c6-427b-a547-ac77230f3d9d.png)
 
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/66015002/127439477-9359d3bb-adf6-4ff6-a920-e7c05e97f580.gif)
+
 
 ## :imp: CORS 정책 해결하기
 
@@ -12,11 +14,6 @@ Cross-Origin Resource Sharing
 어떤 Origin에서 작동하고 있는 웹 어플리케이션이 다른 Origin 서버로의 엑세스를 Origin 사이의 HTTP 요청에 의해 허가를 할 수 있는 체계.
 
 ### :question: Origin이란?
-
-![image](https://user-images.githubusercontent.com/66015002/121205132-5f16dd80-c8b2-11eb-8c7a-a0dbd3174ead.png)
-
-![ezgif com-gif-maker](https://user-images.githubusercontent.com/66015002/127439477-9359d3bb-adf6-4ff6-a920-e7c05e97f580.gif)
-
 
 - 프로토콜과 호스트 그리고 포트번호까지를 나타내는 것.
 - http, https 프로토콜의 기본 포트번호가 정해져있기 때문에 포트번호는 생략이 가능.
