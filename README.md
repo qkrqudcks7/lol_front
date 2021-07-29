@@ -2,7 +2,8 @@
 
 ![image](https://user-images.githubusercontent.com/66015002/127276085-c0160018-31c6-427b-a547-ac77230f3d9d.png)
 
-![ezgif com-gif-maker](https://user-images.githubusercontent.com/66015002/127439477-9359d3bb-adf6-4ff6-a920-e7c05e97f580.gif)
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/66015002/127439899-15701de8-6fe4-4b9e-bb7c-c7712c76d2f8.gif)
+
 
 
 ## :imp: CORS 정책 해결하기
