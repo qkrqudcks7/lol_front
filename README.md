@@ -32,9 +32,23 @@ ex) 오리진 : https://www.naver.com/PORT
 
 ### :star: 프록시 설정
 
-vue.config.js 파일을 따로 만들어 proxy를 지정해주었다.
+webpack의 config에서 proxy를 지정해주었다.
 
-<code>proxy:'https://kr.api.riotgames.com' </code>
+<pre>
+<code>
+dev: {
+    // Paths
+    assetsSubDirectory: 'static',
+    assetsPublicPath: '/',
+    proxyTable: {
+      '/lol': {
+        target: 'https://kr.api.riotgames.com',
+        changeOrigin: true,
+      }
+    }
+  }
+</code>
+</pre>
 
 proxy로 쓸 주소를 등록하게 되면 CORS 에러가 나지 않는다.
 
