@@ -51,10 +51,16 @@
       </v-row>
     </v-container>
     <hr>
+    <div class="text-center" v-if="isLoading">
+      <v-progress-circular
+        :size="50"
+        color="primary"
+        indeterminate
+      ></v-progress-circular>
+    </div>
     <v-container fluid>
       <v-row justify="center">
         <v-subheader>최근 20 게임</v-subheader>
-
         <v-expansion-panels popout>
           <v-expansion-panel
             v-for="(j,index) in detail" :key="index"
@@ -611,6 +617,7 @@ export default {
   name: 'Home',
   data () {
     return {
+      isLoading: true,
       clientName: '',
       name: '',
       message: '',
@@ -627,12 +634,6 @@ export default {
     }
   },
   methods: {
-    // detailGame20 (detail) {
-    //   let count=0
-    //   for (let i in detail) {
-    //     if
-    //   }
-    // },
     detailPage () {
       this.$router.push({name: 'detailMatch'})
     },
@@ -709,7 +710,6 @@ export default {
               array.push(this.findCharacterId(b.champion))
               array.push(this.$moment(b.timestamp).format('MM-DD'))
               let data = response.data
-              console.log(data)
               array.push(this.getDurationTime(data.gameDuration))
               // 해당 유저 아이디 값 구하기
               let id = ''
@@ -789,9 +789,153 @@ export default {
                 }
               }
               array.push(item)
+              let detail1 = []
+              // 10명 디테일 전적
+              for (let i = 0; i < 5; i++) {
+                let temp = []
+                temp.push(this.findCharacterName(data.participants[i].championId))
+                temp.push(this.findCharacterId(data.participants[i].championId))
+                temp.push(data.participantIdentities[i].player.summonerName)
+                let Did = data.participantIdentities[i].participantId
+
+                // 아이디 값으로 승,패 구하기
+                for (let j = 0; j < 2; j++) {
+                  if (data.teams[j].teamId === data.participants[Did - 1].teamId) {
+                    if (data.teams[j].win === 'Win') {
+                      temp.push('승리')
+                    } else {
+                      temp.push('패배')
+                    }
+                  }
+                }
+                // 스펠 1 구하기
+                let file = spellFile.data
+                for (let x in file) {
+                  if (file[x].key === String(data.participants[Did - 1].spell1Id)) {
+                    temp.push(file[x].name)
+                    temp.push('static/spell/' + file[x].id + '.png')
+                    break
+                  }
+                }
+                // 스펠 2 구하기
+                for (let x in file) {
+                  if (file[x].key === String(data.participants[Did - 1].spell2Id)) {
+                    temp.push(file[x].name)
+                    temp.push('static/spell/' + file[x].id + '.png')
+                    break
+                  }
+                }
+                temp.push(data.participants[Did - 1].stats.kills)
+                temp.push(data.participants[Did - 1].stats.deaths)
+                temp.push(data.participants[Did - 1].stats.assists)
+                temp.push(data.participants[Did - 1].stats.champLevel)
+                temp.push(data.participants[Did - 1].stats.totalMinionsKilled)
+                temp.push(data.participants[Did - 1].stats.totalDamageDealtToChampions)
+                temp.push(data.participants[Did - 1].stats.visionWardsBoughtInGame)
+                temp.push(data.participants[Did - 1].stats.wardsKilled)
+                temp.push(data.participants[Did - 1].stats.wardsPlaced)
+
+                temp.push(this.findMainRunes(data.participants[Did - 1].stats.perkPrimaryStyle, data.participants[Did - 1].stats.perk0))
+                temp.push(this.findRunes(data.participants[Did - 1].stats.perkSubStyle))
+
+                let Ifile = itemFile.data
+                let item = []
+                for (let x in Ifile) {
+                  if (x === String(data.participants[Did - 1].stats.item0)) {
+                    item.push('static/item/' + Ifile[x].image.full)
+                  } else if (x === String(data.participants[Did - 1].stats.item1)) {
+                    item.push('static/item/' + Ifile[x].image.full)
+                  } else if (x === String(data.participants[Did - 1].stats.item2)) {
+                    item.push('static/item/' + Ifile[x].image.full)
+                  } else if (x === String(data.participants[Did - 1].stats.item3)) {
+                    item.push('static/item/' + Ifile[x].image.full)
+                  } else if (x === String(data.participants[Did - 1].stats.item4)) {
+                    item.push('static/item/' + Ifile[x].image.full)
+                  } else if (x === String(data.participants[Did - 1].stats.item5)) {
+                    item.push('static/item/' + Ifile[x].image.full)
+                  } else if (x === String(data.participants[Did - 1].stats.item6)) {
+                    item.push('static/item/' + Ifile[x].image.full)
+                  }
+                }
+                temp.push(item)
+                detail1.push(temp)
+              }
+              let detail2 = []
+              for (let i = 5; i < 10; i++) {
+                let temp = []
+                temp.push(this.findCharacterName(data.participants[i].championId))
+                temp.push(this.findCharacterId(data.participants[i].championId))
+                temp.push(data.participantIdentities[i].player.summonerName)
+                let Did = data.participantIdentities[i].participantId
+
+                // 아이디 값으로 승,패 구하기
+                for (let j = 0; j < 2; j++) {
+                  if (data.teams[j].teamId === data.participants[Did - 1].teamId) {
+                    if (data.teams[j].win === 'Win') {
+                      temp.push('승리')
+                    } else {
+                      temp.push('패배')
+                    }
+                  }
+                }
+                // 스펠 1 구하기
+                let file = spellFile.data
+                for (let x in file) {
+                  if (file[x].key === String(data.participants[Did - 1].spell1Id)) {
+                    temp.push(file[x].name)
+                    temp.push('static/spell/' + file[x].id + '.png')
+                    break
+                  }
+                }
+                // 스펠 2 구하기
+                for (let x in file) {
+                  if (file[x].key === String(data.participants[Did - 1].spell2Id)) {
+                    temp.push(file[x].name)
+                    temp.push('static/spell/' + file[x].id + '.png')
+                    break
+                  }
+                }
+                temp.push(data.participants[Did - 1].stats.kills)
+                temp.push(data.participants[Did - 1].stats.deaths)
+                temp.push(data.participants[Did - 1].stats.assists)
+                temp.push(data.participants[Did - 1].stats.champLevel)
+                temp.push(data.participants[Did - 1].stats.totalMinionsKilled)
+                temp.push(data.participants[Did - 1].stats.totalDamageDealtToChampions)
+                temp.push(data.participants[Did - 1].stats.visionWardsBoughtInGame)
+                temp.push(data.participants[Did - 1].stats.wardsKilled)
+                temp.push(data.participants[Did - 1].stats.wardsPlaced)
+
+                temp.push(this.findMainRunes(data.participants[Did - 1].stats.perkPrimaryStyle, data.participants[Did - 1].stats.perk0))
+                temp.push(this.findRunes(data.participants[Did - 1].stats.perkSubStyle))
+
+                let Ifile = itemFile.data
+                let item = []
+                for (let x in Ifile) {
+                  if (x === String(data.participants[Did - 1].stats.item0)) {
+                    item.push('static/item/' + Ifile[x].image.full)
+                  } else if (x === String(data.participants[Did - 1].stats.item1)) {
+                    item.push('static/item/' + Ifile[x].image.full)
+                  } else if (x === String(data.participants[Did - 1].stats.item2)) {
+                    item.push('static/item/' + Ifile[x].image.full)
+                  } else if (x === String(data.participants[Did - 1].stats.item3)) {
+                    item.push('static/item/' + Ifile[x].image.full)
+                  } else if (x === String(data.participants[Did - 1].stats.item4)) {
+                    item.push('static/item/' + Ifile[x].image.full)
+                  } else if (x === String(data.participants[Did - 1].stats.item5)) {
+                    item.push('static/item/' + Ifile[x].image.full)
+                  } else if (x === String(data.participants[Did - 1].stats.item6)) {
+                    item.push('static/item/' + Ifile[x].image.full)
+                  }
+                }
+                temp.push(item)
+                detail2.push(temp)
+              }
+              array.push(detail1)
+              array.push(detail2)
               this.detail.push(array)
             })
           }
+          this.isLoading = false
         })
 
         lolAPI.find_league(this.data).then(response => {
@@ -840,7 +984,6 @@ export default {
             array.push(this.findCharacterId(b.champion))
             array.push(this.$moment(b.timestamp).format('MM-DD'))
             let data = response.data
-            console.log(data)
             array.push(this.getDurationTime(data.gameDuration))
             // 해당 유저 아이디 값 구하기
             let id = ''
@@ -1064,9 +1207,10 @@ export default {
             array.push(detail1)
             array.push(detail2)
             this.detail.push(array)
-            console.log(this.detail)
           })
+          console.log(this.detail)
         }
+        this.isLoading = false
       })
       lolAPI.find_league(this.data).then(response => {
         if (response.data[0]) {
@@ -1102,5 +1246,7 @@ export default {
 </script>
 
 <style scoped>
-
+.v-progress-circular {
+  margin: 1rem;
+}
 </style>

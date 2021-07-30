@@ -7,6 +7,10 @@ import Champ from '../components/Champ'
 import DetailChamp from '../components/DetailChamp'
 import Main from '../components/Main'
 import DetailMatch from '../components/DetailMatch'
+import BoardList from '../components/BoardList'
+import OneBoard from '../components/OneBoard'
+import WriteBoard from '../components/WriteBoard'
+import ModifyBoard from '../components/ModifyBoard'
 
 Vue.use(Router)
 
@@ -47,6 +51,27 @@ export default new Router({
       path: '/detailMatch',
       name: 'detailMatch',
       component: DetailMatch
+    },
+    {
+      path: '/boardList',
+      name: 'boardList',
+      component: BoardList
+    },
+    {
+      path: '/oneBoard',
+      name: 'oneBoard',
+      component: OneBoard
+    },
+    {
+      path: '/writeBoard',
+      name: 'writeBoard',
+      component: WriteBoard
+    },
+    {
+      path: '/modifyBoard',
+      name: 'modifyBoard',
+      component: ModifyBoard
     }
+
   ]
 })

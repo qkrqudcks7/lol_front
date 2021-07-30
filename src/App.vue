@@ -15,7 +15,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/boardlist" class="nav-link">
+            <a href="/boardList" class="nav-link">
               <font-awesome-icon icon="pen" /> 게시판
             </a>
           </li>
