@@ -1,4 +1,10 @@
-# LOL 전적 검색 프로젝트 Front ( Vue.js, s3 정적 호스팅 예정)
+# LOL 전적 검색 프로젝트 Front ( Vue.js)
+
+
+(미완성)
+
+사이트 : http://park.gg.kr.s3-website.ap-northeast-2.amazonaws.com/
+
 
 ![image](https://user-images.githubusercontent.com/66015002/127276085-c0160018-31c6-427b-a547-ac77230f3d9d.png)
 
