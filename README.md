@@ -6,7 +6,7 @@
 
 
 
-## :imp: CORS 정책 해결하기
+## :imp: CORS 정책 해결하기(in Local)
 
 ### :question: CORS란?
 
