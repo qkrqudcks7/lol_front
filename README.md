@@ -6,7 +6,7 @@
 
 
 
-## :imp: CORS 정책 해결하기(in Local)
+## :imp: CORS 정책 해결하기(Local)
 
 ### :question: CORS란?
 
@@ -22,7 +22,6 @@ Cross-Origin Resource Sharing
 ex) 도메인: naver.com
 
 ex) 오리진 : https://www.naver.com/PORT
-
 
 ### :question: 왜 CORS가 있어야 되는거야?
 
@@ -51,6 +50,17 @@ dev: {
 </pre>
 
 proxy로 쓸 주소를 등록하게 되면 CORS 에러가 나지 않는다.
+
+<hr>
+
+## :imp: CORS 정책 해결하기(Build)
+
+라이엇 api의 문서를 참고해보면 개인 key 값 때문에 프론트 단에서 바로 호출을 할 수 없다(cors 에러 발생).
+따라서 서버단에서 api를 호출하여 정제된 값을 front로 보내기로 했다.
+
+예시이다)
+
+![image](https://user-images.githubusercontent.com/66015002/127887303-1d328a42-34c3-4eb0-8224-584a76b46443.png)
 
 <hr>
 
