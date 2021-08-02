@@ -97,10 +97,10 @@ export default {
     },
     submitComment () {
       this.commentForm.id = this.loginUser.id
-      axios.post(`http://localhost:8080/api/board/comments/${this.boardId}`, this.commentForm)
+      axios.post(`http://3.38.10.189:8080/api/board/comments/${this.boardId}`, this.commentForm)
         .then(() => {
           this.commentForm.comment = ''
-          axios.get(`http://localhost:8080/api/board/comments/${this.boardId}`)
+          axios.get(`http://3.38.10.189:8080/api/board/comments/${this.boardId}`)
             .then(result => {
               this.commentList = result.data
             })

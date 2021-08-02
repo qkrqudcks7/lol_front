@@ -1,7 +1,7 @@
 import axios from 'axios'
 import authHeader from './auth_header'
 
-const URL = 'http://localhost:8080/api/board'
+const URL = 'http://3.38.10.189:8080/api/board'
 
 export default {
   getAllBoard () {

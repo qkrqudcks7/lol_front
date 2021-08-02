@@ -1208,7 +1208,6 @@ export default {
             array.push(detail2)
             this.detail.push(array)
           })
-          console.log(this.detail)
         }
         this.isLoading = false
       })
