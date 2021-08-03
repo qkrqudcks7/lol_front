@@ -11,7 +11,7 @@ export default {
     return axios.get(`${URL}/findleague/${id}`)
   },
   find_match (accountId) {
-    return axios.get(`${URL}/findmatch/${accountId}`, {params: {beginIndex: 0, endIndex: 19}})
+    return axios.get(`${URL}/findmatch/${accountId}`)
   },
   find_detail_match (matchId) {
     return axios.get(`${URL}/finddetailmatch/${matchId}`)

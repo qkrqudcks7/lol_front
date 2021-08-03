@@ -18,7 +18,6 @@ export default {
     }
   },
   mounted () {
-    console.log('마운트')
     AuthService.getUserContent()
       .then(response => {
         this.content = response.data
