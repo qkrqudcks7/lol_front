@@ -1,18 +1,5 @@
 <template>
   <v-app id="Champ">
-    <v-app-bar app>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-
-      <v-toolbar-title>챔피언</v-toolbar-title>
-    </v-app-bar>
-
-    <v-navigation-drawer
-      v-model="drawer"
-      fixed
-      temporary
-    >
-    </v-navigation-drawer>
-
     <v-main class="grey lighten-2">
       <v-container>
         <v-row>

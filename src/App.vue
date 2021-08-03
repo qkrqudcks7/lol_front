@@ -67,7 +67,6 @@
       <v-app-bar-nav-icon @click="drawer = !drawer">
         <!--        -->
       </v-app-bar-nav-icon>
-
       <v-toolbar-title><a href="/" class="nav-link">Park.GG</a></v-toolbar-title>
       <v-toolbar-title><a href="/champ" class="nav-link">챔피언</a></v-toolbar-title>
       <v-toolbar-title><a href="/boardList" class="nav-link">게시판</a></v-toolbar-title>
@@ -89,11 +88,6 @@ export default {
   computed: {
     currentUser () {
       return this.$store.state.auth.initialState.user
-    }
-  },
-  watch: {
-    check () {
-      this.currentUser()
     }
   },
   methods: {

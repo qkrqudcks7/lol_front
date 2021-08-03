@@ -76,8 +76,8 @@ export default {
       return this.$route.params.id
     },
     loginUser () {
-      if (this.$store.state.auth.user) {
-        return this.$store.state.auth.user
+      if (this.$store.state.auth.initialState.user) {
+        return this.$store.state.auth.initialState.user
       } else {
         return ''
       }
