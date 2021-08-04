@@ -11,6 +11,7 @@ import BoardList from '../components/BoardList'
 import OneBoard from '../components/OneBoard'
 import WriteBoard from '../components/WriteBoard'
 import ModifyBoard from '../components/ModifyBoard'
+import Example from '../components/example'
 
 Vue.use(Router)
 
@@ -71,6 +72,11 @@ export default new Router({
       path: '/modifyBoard',
       name: 'modifyBoard',
       component: ModifyBoard
+    },
+    {
+      path: '/example',
+      name: 'example',
+      component: Example
     }
 
   ]

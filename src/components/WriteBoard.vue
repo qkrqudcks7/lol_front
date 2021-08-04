@@ -24,7 +24,7 @@
               </div>
               <div class="form-group">
                 <label for="img">첨부 이미지</label>
-                <input type="file" id="img" class="form-control" accept="image/*"/>
+                <input type="file" id="img" @change="selectFile" ref="myimg" class="form-control" accept="image/*"/>
               </div>
               <div class="form-group">
                 <div class="text-right">
@@ -46,6 +46,7 @@ export default {
   name: 'WriteBoard',
   data () {
     return {
+      img: '',
       boardRequest: {subject: '', text: '', imgUrl: ''}
     }
   },
@@ -60,7 +61,11 @@ export default {
   },
   methods: {
     submitBoard () {
-      BoardAPI.submitBoard(this.boardRequest).then(response => {
+      const formData = new FormData()
+      formData.append('subject', this.boardRequest.subject)
+      formData.append('text', this.boardRequest.text)
+      formData.append('multipartFile', this.img)
+      BoardAPI.submitBoard(formData).then(response => {
         if (response.status === 200) {
           alert('등록 되었습니다.')
           this.$router.push('boardList')
@@ -68,6 +73,9 @@ export default {
           alert('등록에 실패했습니다.')
         }
       })
+    },
+    selectFile () {
+      this.img = this.$refs.myimg.files[0]
     }
   }
 }

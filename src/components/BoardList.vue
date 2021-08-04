@@ -7,28 +7,26 @@
         <table class="table table-hover" id='board_list'>
           <thead>
           <tr>
-            <th class="text-center d-none d-md-table-cell">글번호</th>
+            <th class="text-center d-md-table-cell">글번호</th>
             <th class="w-50">제목</th>
-            <th class="text-center d-none d-md-table-cell">작성자</th>
-            <th class="text-center d-none d-md-table-cell">조회수</th>
-            <th class="text-center d-none d-md-table-cell">작성날짜</th>
+            <th class="text-center d-md-table-cell">작성자</th>
+            <th class="text-center d-md-table-cell">조회수</th>
+            <th class="text-center d-md-table-cell">작성날짜</th>
           </tr>
           </thead>
           <tbody>
           <tr v-for="(i,index) in boardList" :key="index">
-            <td class="text-center d-none d-md-table-cell">{{i.id}}</td>
-            <td class="text-center d-none d-md-table-cell" @click="getOneBoard(i.id)">{{i.subject}}</td>
-            <td class="text-center d-none d-md-table-cell">{{i.writer}}</td>
-            <td class="text-center d-none d-md-table-cell">{{i.viewCount}}</td>
-            <td class="text-center d-none d-md-table-cell">{{i.localDateTime}}</td>
+            <td class="text-center d-md-table-cell">{{i.id}}</td>
+            <td class="text-center d-md-table-cell" @click="getOneBoard(i.id)">{{i.subject}}</td>
+            <td class="text-center d-md-table-cell">{{i.writer}}</td>
+            <td class="text-center d-md-table-cell">{{i.viewCount}}</td>
+            <td class="text-center d-md-table-cell">{{i.localDateTime}}</td>
           </tr>
           </tbody>
         </table>
-
         <div class="text-right">
           <button class="btn btn-primary" @click="writeBoard">글쓰기</button>
         </div>
-
       </div>
     </div>
   </div>
@@ -56,7 +54,6 @@ export default {
     BoardAPI.getAllBoard()
       .then(response => {
         this.boardList = response.data
-        console.log(this.boardList)
       })
   }
 }

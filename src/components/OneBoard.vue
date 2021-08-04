@@ -22,11 +22,15 @@
                 <label for="text">내용</label>
                 <textarea v-model="myBoard.text" id="text" class="form-control" rows="10" style="resize:none" disabled="disabled"></textarea>
               </div>
+              <br>
+              <div class="form-group" v-if="myBoard.imgUrl">
+                <img :src="myBoard.imgUrl" class="form-control">
+              </div>
               <div class="form-group">
                 <div class="text-right">
                   <button class="btn btn-primary" @click="BoardList">목록으로</button>
                   <span v-if="myBoard.writer === this.loginUser.username"><button class="btn btn-info" @click="ModifyBoard">수정하기</button>
-                  <button class="btn btn-danger" @click="DeleteBoard(this.boardId)">삭제하기</button></span>
+                  <button class="btn btn-danger" @click="DeleteBoard">삭제하기</button></span>
                 </div>
               </div>
             </div>
@@ -90,8 +94,8 @@ export default {
     ModifyBoard () {
       this.$router.push({name: 'modifyBoard', params: {id: this.boardId}})
     },
-    DeleteBoard (id) {
-      BoardAPI.deleteBoard(id).then(() => {
+    DeleteBoard () {
+      BoardAPI.deleteBoard(this.boardId).then(() => {
         this.$router.push('boardList')
       })
     },

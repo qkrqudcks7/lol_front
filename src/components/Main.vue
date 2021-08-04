@@ -1,7 +1,7 @@
 <template>
   <v-app name="Main">
     <div class="col-md-6 offset-md-3">
-      <img src="/static/park.png" width="800"><br><br>
+      <img src="/static/park.png" class="col-md-12"><br><br>
       <div>
         <input type="text" class="form-control" v-model="userInput" @keyup.enter="addNewTodo">
         <v-btn block color="secondary" dark @click="addNewTodo">PARK.GG</v-btn>
