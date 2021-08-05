@@ -4,30 +4,19 @@
     <div class="card shadow">
       <div class="card-body">
         <h4 class="card-title">Board</h4>
-        <table class="table table-hover" id='board_list'>
-          <thead>
-          <tr>
-            <th class="text-center d-md-table-cell">글번호</th>
-            <th class="w-50">제목</th>
-            <th class="text-center d-md-table-cell">작성자</th>
-            <th class="text-center d-md-table-cell">조회수</th>
-            <th class="text-center d-md-table-cell">작성날짜</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr v-for="(i,index) in boardList" :key="index">
-            <td class="text-center d-md-table-cell">{{i.id}}</td>
-            <td class="text-center d-md-table-cell" @click="getOneBoard(i.id)">{{i.subject}}</td>
-            <td class="text-center d-md-table-cell">{{i.writer}}</td>
-            <td class="text-center d-md-table-cell">{{i.viewCount}}</td>
-            <td class="text-center d-md-table-cell">{{i.localDateTime}}</td>
-          </tr>
-          </tbody>
-        </table>
+        <b-table striped hover :items="boardList" :fields="fields" :per-page="perPage" :current-page="currentPage" small @row-clicked="getOneBoard"></b-table>
         <div class="text-right">
           <button class="btn btn-primary" @click="writeBoard">글쓰기</button>
         </div>
       </div>
+    </div>
+    <div class="text-center">
+      <b-pagination
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        aria-controls="my-table"
+      ></b-pagination>
     </div>
   </div>
 </div>
@@ -39,12 +28,41 @@ export default {
   name: 'BoardList',
   data () {
     return {
+      fields: [
+        {
+          key: 'id',
+          label: '글번호'
+        },
+        {
+          key: 'writer',
+          label: '작성자'
+        },
+        {
+          key: 'subject',
+          label: '제목'
+        },
+        {
+          key: 'viewCount',
+          label: '조회수'
+        },
+        {
+          key: 'localDateTime',
+          label: '작성날짜'
+        }
+      ],
+      currentPage: 1,
+      perPage: 5,
       boardList: []
     }
   },
+  computed: {
+    rows () {
+      return this.boardList.length
+    }
+  },
   methods: {
-    getOneBoard (id) {
-      this.$router.push({name: 'oneBoard', params: {id: id}})
+    getOneBoard (item, index, e) {
+      this.$router.push({name: 'oneBoard', params: {id: item.id}})
     },
     writeBoard () {
       this.$router.push({name: 'writeBoard'})
@@ -54,6 +72,7 @@ export default {
     BoardAPI.getAllBoard()
       .then(response => {
         this.boardList = response.data
+        console.log(this.boardList)
       })
   }
 }

@@ -29,7 +29,7 @@ library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt, faPen)
 Vue.use(VueMoment)
 Vue.use(BootstrapVue)
 Vue.use(Vuetify)
-Vue.use(VeeValidate)
+Vue.use(VeeValidate, {fieldsBagName: 'formFields'})
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(CKEditor)
 Vue.config.productionTip = false

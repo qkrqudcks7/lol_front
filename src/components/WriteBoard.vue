@@ -49,7 +49,6 @@ export default {
     return {
       editorData: '',
       editorConfig: {
-        // The configuration of the editor.
       },
       img: '',
       boardRequest: {subject: '', text: '', imgUrl: ''}
