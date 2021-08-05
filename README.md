@@ -13,7 +13,7 @@ toDoList
 사이트 : http://park.gg.kr.s3-website.ap-northeast-2.amazonaws.com/
 
 
-![image](https://user-images.githubusercontent.com/66015002/127276085-c0160018-31c6-427b-a547-ac77230f3d9d.png)
+![image](https://user-images.githubusercontent.com/66015002/128378408-ae5ca32f-17cc-4ac5-beb9-2e0f1e7aac0c.png)
 
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/66015002/127439899-15701de8-6fe4-4b9e-bb7c-c7712c76d2f8.gif)
 
