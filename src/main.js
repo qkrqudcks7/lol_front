@@ -13,6 +13,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import '@mdi/font/css/materialdesignicons.css'
 import Vuetify from 'vuetify'
+import CKEditor from 'ckeditor4-vue'
 import 'vuetify/dist/vuetify.min.css'
 import {
   faHome,
@@ -30,6 +31,7 @@ Vue.use(BootstrapVue)
 Vue.use(Vuetify)
 Vue.use(VeeValidate)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.use(CKEditor)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

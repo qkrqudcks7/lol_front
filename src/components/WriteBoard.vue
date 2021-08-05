@@ -19,8 +19,9 @@
                 <input type="text" id="subject" class="form-control" v-model="boardRequest.subject"/>
               </div>
               <div class="form-group">
-                <label for="text">내용</label>
-                <textarea id="text" class="form-control" rows="10" style="resize:none" v-model="boardRequest.text"></textarea>
+                <label>내용</label>
+                <ckeditor v-model="editorData" :config="editorConfig"></ckeditor>
+                <button v-on:click="emptyEditor()">Empty the editor</button>
               </div>
               <div class="form-group">
                 <label for="img">첨부 이미지</label>
@@ -46,6 +47,10 @@ export default {
   name: 'WriteBoard',
   data () {
     return {
+      editorData: '',
+      editorConfig: {
+        // The configuration of the editor.
+      },
       img: '',
       boardRequest: {subject: '', text: '', imgUrl: ''}
     }
@@ -60,7 +65,11 @@ export default {
     }
   },
   methods: {
+    emptyEditor () {
+      this.boardRequest.text = ''
+    },
     submitBoard () {
+      this.boardRequest.text = this.editorData
       const formData = new FormData()
       formData.append('subject', this.boardRequest.subject)
       formData.append('text', this.boardRequest.text)

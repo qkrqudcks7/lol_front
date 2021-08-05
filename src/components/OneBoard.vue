@@ -19,8 +19,8 @@
                 <input type="text" v-model="myBoard.subject" id="subject"  class="form-control" disabled="disabled"/>
               </div>
               <div class="form-group">
-                <label for="text">내용</label>
-                <textarea v-model="myBoard.text" id="text" class="form-control" rows="10" style="resize:none" disabled="disabled"></textarea>
+                <label>내용</label>
+                <ckeditor read-only="true" v-model="myBoard.text" :config="editorConfig"></ckeditor>
               </div>
               <br>
               <div class="form-group" v-if="myBoard.imgUrl">
@@ -70,6 +70,9 @@ export default {
   name: 'OneBoard',
   data () {
     return {
+      editorConfig: {
+        // The configuration of the editor.
+      },
       myBoard: {},
       commentList: [],
       commentForm: {id: '', comment: ''}
