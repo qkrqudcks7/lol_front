@@ -12,8 +12,16 @@ import OneBoard from '../components/OneBoard'
 import WriteBoard from '../components/WriteBoard'
 import ModifyBoard from '../components/ModifyBoard'
 import Example from '../components/example'
+import store from '../store'
 
 Vue.use(Router)
+
+const requireAuth = () => (to, from, next) => {
+  if (store.state.auth.initialState.user) {
+    return next()
+  }
+  next('/login')
+}
 
 export default new Router({
   mode: 'history',
@@ -31,7 +39,8 @@ export default new Router({
     {
       path: '/profile',
       name: 'profile',
-      component: Profile
+      component: Profile,
+      beforeEnter: requireAuth()
     },
     {
       path: '/champ',
@@ -66,12 +75,14 @@ export default new Router({
     {
       path: '/writeBoard',
       name: 'writeBoard',
-      component: WriteBoard
+      component: WriteBoard,
+      beforeEnter: requireAuth()
     },
     {
       path: '/modifyBoard',
       name: 'modifyBoard',
-      component: ModifyBoard
+      component: ModifyBoard,
+      beforeEnter: requireAuth()
     },
     {
       path: '/example',
