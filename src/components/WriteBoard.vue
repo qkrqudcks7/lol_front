@@ -23,10 +23,10 @@
                 <ckeditor v-model="editorData" :config="editorConfig"></ckeditor>
                 <button v-on:click="emptyEditor()">Empty the editor</button>
               </div>
-              <div class="form-group">
-                <label for="img">첨부 이미지</label>
-                <input type="file" id="img" @change="selectFile" ref="myimg" class="form-control" accept="image/*"/>
-              </div>
+<!--              <div class="form-group">-->
+<!--                <label for="img">첨부 이미지</label>-->
+<!--                <input type="file" id="img" @change="selectFile" ref="myimg" class="form-control" accept="image/*"/>-->
+<!--              </div>-->
               <div class="form-group">
                 <div class="text-right">
                   <button @click="submitBoard" class="btn btn-primary">작성하기</button>
@@ -48,7 +48,7 @@ export default {
   data () {
     return {
       editorData: '',
-      editorConfig: {
+      deditorConfig: {
       },
       img: '',
       boardRequest: {subject: '', text: '', imgUrl: ''}

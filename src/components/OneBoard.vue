@@ -29,7 +29,7 @@
               <div class="form-group">
                 <div class="text-right">
                   <button class="btn btn-primary" @click="BoardList">목록으로</button>
-                  <span v-if="myBoard.writer === this.loginUser.username"><button class="btn btn-info" @click="ModifyBoard">수정하기</button>
+                  <span v-if="myBoard.userId === this.loginUser.username"><button class="btn btn-info" @click="ModifyBoard">수정하기</button>
                   <button class="btn btn-danger" @click="DeleteBoard">삭제하기</button></span>
                 </div>
               </div>
