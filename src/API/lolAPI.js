@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const URL = 'http://3.38.10.189:8080/lol'
+// const URL = 'http://3.38.10.189:8080/lol'
+const URL = 'http://localhost:8080/lol'
 
 export default {
   find_id (name) {
@@ -15,5 +16,8 @@ export default {
   },
   find_detail_match (matchId) {
     return axios.get(`${URL}/finddetailmatch/${matchId}`)
+  },
+  find_now_game (id) {
+    return axios.get(`${URL}/findnowgame/${id}`)
   }
 }

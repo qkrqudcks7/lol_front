@@ -5,6 +5,190 @@
       <v-btn block color="secondary" dark @click="find_id">PARK.GG</v-btn>
     </div>
     <div>{{clientName}}</div>
+    <v-btn color="primary" @click="getNowGame">
+      진행 중인 게임 보기
+    </v-btn>
+      <v-container fluid v-if="inGameState === true">
+        <v-row justify="center">
+          <v-expansion-panels popout>
+            <v-expansion-panel
+              v-for="(x,index) in inGame1" :key="index+'abc'"
+              hide-actions
+            >
+              <v-expansion-panel-header>
+                <v-col
+                  class="text-no-wrap"
+                  cols="5"
+                  sm="2"
+                >
+                  <strong v-html="x[0]"></strong><br><br>
+                </v-col>
+                <v-row
+                  align="center"
+                  class="spacer"
+                  no-gutters
+                >
+                  <v-col
+                    cols="4"
+                    sm="2"
+                    md="1"
+                  >
+                    <v-avatar
+                      size="50px"
+                    >
+                      <img
+                        alt="Avatar"
+                        :src="x[3]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img
+                        alt="Avatar"
+                        :src="x[5]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img
+                        alt="Avatar"
+                        :src="x[7]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img
+                        alt="Avatar"
+                        :src="x[8]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img
+                        :src="x[9]"
+                      >
+                    </v-avatar>
+                  </v-col>
+
+                  <v-col
+                    class="text-no-wrap"
+                    cols="5"
+                    sm="3"
+                  >
+                    <strong>{{x[1]}} {{x[2]}}</strong><br><br>
+                  </v-col>
+                  <v-col
+                    class="grey--text text-truncate hidden-sm-and-down"
+                  >
+                    <v-avatar
+                      size="50px"
+                    >
+                      <img
+                        :src="x[10]"
+                      >
+                    </v-avatar>
+                  </v-col>
+                </v-row>
+              </v-expansion-panel-header>
+            </v-expansion-panel>
+          </v-expansion-panels>
+        </v-row>
+      </v-container>
+      <div><br><br></div>
+      <v-container fluid>
+        <v-row justify="center">
+          <v-expansion-panels popout>
+            <v-expansion-panel
+              v-for="(x,index) in inGame2" :key="index+'bcd'"
+              hide-actions
+            >
+              <v-expansion-panel-header>
+                <v-col
+                  class="text-no-wrap"
+                  cols="5"
+                  sm="2"
+                >
+                  <strong v-html="x[0]"></strong><br><br>
+                </v-col>
+                <v-row
+                  align="center"
+                  class="spacer"
+                  no-gutters
+                >
+                  <v-col
+                    cols="4"
+                    sm="2"
+                    md="1"
+                  >
+                    <v-avatar
+                      size="50px"
+                    >
+                      <img
+                        alt="Avatar"
+                        :src="x[3]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img
+                        alt="Avatar"
+                        :src="x[5]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img
+                        alt="Avatar"
+                        :src="x[7]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img
+                        alt="Avatar"
+                        :src="x[8]"
+                      >
+                    </v-avatar>
+                    <v-avatar
+                      size="25px"
+                    >
+                      <img
+                        :src="x[9]"
+                      >
+                    </v-avatar>
+                  </v-col>
+
+                  <v-col
+                    class="text-no-wrap"
+                    cols="5"
+                    sm="3"
+                  >
+                    <strong>{{x[1]}} {{x[2]}}</strong><br><br>
+                  </v-col>
+                  <v-col
+                    class="grey--text text-truncate hidden-sm-and-down"
+                  >
+                    <v-avatar
+                      size="50px"
+                    >
+                      <img
+                        :src="x[10]"
+                      >
+                    </v-avatar>
+                  </v-col>
+                </v-row>
+              </v-expansion-panel-header>
+            </v-expansion-panel>
+          </v-expansion-panels>
+        </v-row>
+      </v-container>
     <hr>
     <v-container fluid>
       <v-row>
@@ -625,7 +809,10 @@ export default {
       solo: [],
       free: [],
       match: [],
-      detail: []
+      detail: [],
+      inGame1: [],
+      inGame2: [],
+      inGameState: false
     }
   },
   computed: {
@@ -634,6 +821,47 @@ export default {
     }
   },
   methods: {
+    async getNowGame () {
+      let temp = []
+      await lolAPI.find_now_game(this.data).then(async response => {
+        for (let i in response.data.participants) {
+          let temp2 = []
+          await lolAPI.find_league(response.data.participants[i].summonerId).then(res => {
+            temp2.push(res.data[0].summonerName)
+            temp2.push(res.data[0].tier)
+            temp2.push(res.data[0].rank)
+          })
+          temp2.push(this.findCharacterId(response.data.participants[i].championId))
+          let file = spellFile.data
+          for (let j in file) {
+            if (file[j].key === String(response.data.participants[i].spell1Id)) {
+              temp2.push(file[j].name)
+              temp2.push('static/spell/' + file[j].id + '.png')
+              break
+            }
+          }
+          // 스펠 2 구하기
+          for (let j in file) {
+            if (file[j].key === String(response.data.participants[i].spell2Id)) {
+              temp2.push(file[j].name)
+              temp2.push('static/spell/' + file[j].id + '.png')
+              break
+            }
+          }
+          temp2.push(this.findRunes(response.data.participants[i].perks.perkStyle, response.data.participants[i].perks.perkSubStyle))
+          temp2.push(this.findRunes(response.data.participants[i].perks.perkSubStyle))
+          temp2.push(this.findCharacterId(response.data.bannedChampions[i].championId))
+          temp.push(temp2)
+        }
+        this.inGame1 = temp.slice(0, 5)
+        this.inGame2 = temp.slice(5, 10)
+        this.inGameState = true
+      }, error => {
+        console.log(error.response.data)
+      })
+      console.log(this.inGame1)
+      console.log(this.inGame2)
+    },
     detailPage () {
       this.$router.push({name: 'detailMatch'})
     },
