@@ -72,7 +72,6 @@ export default {
     BoardAPI.getAllBoard()
       .then(response => {
         this.boardList = response.data
-        console.log(this.boardList)
       })
   }
 }

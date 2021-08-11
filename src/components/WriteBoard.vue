@@ -48,7 +48,7 @@ export default {
   data () {
     return {
       editorData: '',
-      deditorConfig: {
+      editorConfig: {
       },
       img: '',
       boardRequest: {subject: '', text: '', imgUrl: ''}

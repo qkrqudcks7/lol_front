@@ -22,7 +22,11 @@ export default {
   deleteBoard (id) {
     return axios.delete(URL + `/oneboard/${id}`)
   },
-  submitComment (id, commentForm) {
-    return axios.post(URL + `/comments/${id}`, commentForm)
+  deleteComment (id) {
+    return axios.delete(URL + `/comments/${id}`)
+  },
+  addLikeToBoard (id, email) {
+    console.log(email)
+    return axios.post(URL + `/liketoboard/${id}/${email}`)
   }
 }

@@ -20,7 +20,7 @@
               </div>
               <div class="form-group">
                 <label>내용</label>
-                <ckeditor read-only="true" v-model="myBoard.text" :config="editorConfig"></ckeditor>
+                <ckeditor type="inline" v-model="myBoard.text" :config="editorConfig"></ckeditor>
               </div>
               <br>
               <div class="form-group" v-if="myBoard.imgUrl">
@@ -28,6 +28,7 @@
               </div>
               <div class="form-group">
                 <div class="text-right">
+                  <button @click="addLike"><v-icon>mdi-heart</v-icon>{{myBoard.likeCount}}</button>&nbsp;&nbsp;
                   <button class="btn btn-primary" @click="BoardList">목록으로</button>
                   <span v-if="myBoard.userId === this.loginUser.username"><button class="btn btn-info" @click="ModifyBoard">수정하기</button>
                   <button class="btn btn-danger" @click="DeleteBoard">삭제하기</button></span>
@@ -42,6 +43,7 @@
             <th>작성자</th>
             <th>내용</th>
             <th>작성시간</th>
+            <th>삭제</th>
           </tr>
           </thead>
           <tbody>
@@ -49,6 +51,7 @@
             <td>{{i.writer}}</td>
             <td>{{i.comment}}</td>
             <td>{{i.localDateTime}}</td>
+            <button class="btn btn-danger" @click="DeleteComments(i.id)">삭제하기</button>
           </tr>
           </tbody>
         </table>
@@ -75,7 +78,8 @@ export default {
       },
       myBoard: {},
       commentList: [],
-      commentForm: {id: '', comment: ''}
+      commentForm: {id: '', comment: ''},
+      email: ''
     }
   },
   computed: {
@@ -88,9 +92,23 @@ export default {
       } else {
         return ''
       }
+    },
+    currentUser () {
+      return this.$store.state.auth.initialState.user.username
     }
   },
   methods: {
+    addLike () {
+      this.email = this.currentUser
+      BoardAPI.addLikeToBoard(this.boardId, this.email).then(response => {
+        BoardAPI.getOneBoard(this.boardId).then(result => {
+          this.myBoard = result.data
+        })
+        BoardAPI.getComment(this.boardId).then(result => {
+          this.commentList = result.data
+        })
+      })
+    },
     BoardList () {
       this.$router.push('boardList')
     },
@@ -107,7 +125,7 @@ export default {
       axios.post(`http://3.38.10.189:8080/api/board/comments/${this.boardId}`, this.commentForm)
         .then(() => {
           this.commentForm.comment = ''
-          axios.get(`http://3.38.10.189:8080/api/board/comments/${this.boardId}`)
+          axios.get(`http://localhost:8080/api/board/comments/${this.boardId}`)
             .then(result => {
               this.commentList = result.data
             })
@@ -115,6 +133,14 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    },
+    DeleteComments (id) {
+      BoardAPI.deleteComment(id).then(response => {
+        axios.get(`http://localhost:8080/api/board/comments/${this.boardId}`)
+          .then(result => {
+            this.commentList = result.data
+          })
+      })
     }
   },
   mounted () {

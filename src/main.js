@@ -33,7 +33,6 @@ Vue.use(VeeValidate, {fieldsBagName: 'formFields'})
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(CKEditor)
 Vue.config.productionTip = false
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
