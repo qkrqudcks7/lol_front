@@ -53,7 +53,7 @@
             <td>{{i.comment}}</td>
             <td><small>{{i.localDateTime}}</small></td>
             <td><v-icon @click="addLikeComment(i.id)">mdi-heart</v-icon>{{i.likeCount}}</td>
-            <button class="btn btn-danger" @click="DeleteComments(i.id)">삭제하기</button>
+            <button v-if="currentUser === i.email" class="btn btn-danger" @click="DeleteComments(i.id)">삭제하기</button>
           </tr>
           </tbody>
         </table>
