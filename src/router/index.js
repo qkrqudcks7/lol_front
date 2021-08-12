@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../components/Home'
 import Login from '../components/Login'
+import Register from '../components/Register'
 import Profile from '../components/Profile'
 import Champ from '../components/Champ'
 import DetailChamp from '../components/DetailChamp'
@@ -41,6 +42,11 @@ export default new Router({
       name: 'profile',
       component: Profile,
       beforeEnter: requireAuth()
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register
     },
     {
       path: '/champ',
