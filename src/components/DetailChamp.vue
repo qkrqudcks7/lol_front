@@ -3,42 +3,67 @@
   <v-main class="grey lighten-3">
     <v-container>
       <v-row>
-        <v-col cols="2">
-          <v-sheet rounded="lg">
-            <v-list color="transparent">
-              <v-list-item
-                v-for="n in 5"
-                :key="n"
-                link
-              >
-                <v-list-item-content>
-                  <v-list-item-title>
-                    List Item {{ n }}
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-
-              <v-divider class="my-2"></v-divider>
-
-              <v-list-item
-                link
-                color="grey lighten-4"
-              >
-                <v-list-item-content>
-                  <v-list-item-title>
-                    dd
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list>
-          </v-sheet>
-        </v-col>
-
         <v-col>
-          <v-sheet
-            min-height="70vh"
-            rounded="lg"
-          >
+          <v-sheet min-height="70vh" rounded="lg">
+            <v-timeline align-top :dense="$vuetify.breakpoint.smAndDown">
+              <v-timeline-item color="light-blue darken-1" icon="mdi-star" fill-dot>
+                <v-card color="light-blue darken-1" dark>
+                  <v-card-title class="text-h6">
+                    <img :src="`static/champion/${lolData.img}`">&nbsp;&nbsp; <strong>{{lolData.name}}</strong>
+                  </v-card-title>
+                </v-card>
+              </v-timeline-item>
+              <v-timeline-item color="red lighten-2" icon="mdi-buffer" fill-dot>
+                <v-card color="red lighten-2" dark>
+                  <v-card-title class="text-h6">
+                    <img :src="`static/passive/${lolData.passive_img}`">&nbsp;&nbsp; 패시브 : {{lolData.passive}}
+                  </v-card-title>
+                  <v-card-text class="white text--primary">
+                    <p>{{lolData.passive_text}}</p>
+                  </v-card-text>
+                </v-card>
+              </v-timeline-item>
+              <v-timeline-item color="purple darken-1" icon="mdi-buffer" fill-dot>
+                <v-card color="purple darken-1" dark>
+                  <v-card-title class="text-h6">
+                    <img :src="`static/spell/${lolData.q_img}`">&nbsp;&nbsp; Q : {{lolData.q}}
+                  </v-card-title>
+                  <v-card-text class="white text--primary">
+                    <p>{{lolData.q_text}}</p>
+                  </v-card-text>
+                </v-card>
+              </v-timeline-item>
+              <v-timeline-item color="green lighten-1" icon="mdi-buffer" fill-dot>
+                <v-card color="green lighten-1" dark>
+                  <v-card-title class="text-h6">
+                    <img :src="`static/spell/${lolData.w_img}`">&nbsp;&nbsp; W : {{lolData.w}}
+                  </v-card-title>
+                  <v-card-text class="white text--primary">
+                    <p>{{lolData.w_text}}</p>
+                  </v-card-text>
+                </v-card>
+              </v-timeline-item>
+              <v-timeline-item color="indigo" icon="mdi-buffer" fill-dot>
+                <v-card color="indigo" dark>
+                  <v-card-title class="text-h6">
+                    <img :src="`static/spell/${lolData.e_img}`">&nbsp;&nbsp; E : {{lolData.e}}
+                  </v-card-title>
+                  <v-card-text class="white text--primary">
+                    <p>{{lolData.e_text}}</p>
+                  </v-card-text>
+                </v-card>
+              </v-timeline-item>
+              <v-timeline-item color="orange darken-3" icon="mdi-star" fill-dot>
+                <v-card color="orange darken-3" dark>
+                  <v-card-title class="text-h6">
+                    <img :src="`static/spell/${lolData.r_img}`">&nbsp;&nbsp; R : {{lolData.r}}
+                  </v-card-title>
+                  <v-card-text class="white text--primary">
+                    <p>{{lolData.r_text}}</p>
+                  </v-card-text>
+                </v-card>
+              </v-timeline-item>
+            </v-timeline>
           </v-sheet>
         </v-col>
       </v-row>
@@ -53,6 +78,7 @@ export default {
   name: 'DetailChamp',
   data () {
     return {
+      lolData: []
     }
   },
   computed: {
@@ -65,7 +91,8 @@ export default {
   },
   mounted () {
     myAPI.getOneChampion(this.getName).then(response => {
-      console.log(response.data)
+      this.lolData = response.data
+      console.log(this.lolData)
     })
   }
 }
