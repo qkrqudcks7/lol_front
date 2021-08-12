@@ -43,6 +43,7 @@
             <th>작성자</th>
             <th>내용</th>
             <th>작성시간</th>
+            <th>좋아요</th>
             <th>삭제</th>
           </tr>
           </thead>
@@ -50,7 +51,8 @@
           <tr v-for="(i,index) in commentList" :key="index">
             <td>{{i.writer}}</td>
             <td>{{i.comment}}</td>
-            <td>{{i.localDateTime}}</td>
+            <td><small>{{i.localDateTime}}</small></td>
+            <td><v-icon @click="addLikeComment(i.id)">mdi-heart</v-icon>{{i.likeCount}}</td>
             <button class="btn btn-danger" @click="DeleteComments(i.id)">삭제하기</button>
           </tr>
           </tbody>
@@ -109,6 +111,17 @@ export default {
         })
       })
     },
+    addLikeComment (id) {
+      this.email = this.currentUser
+      BoardAPI.addLikeToComment(id, this.email).then(response => {
+        BoardAPI.getOneBoard(this.boardId).then(result => {
+          this.myBoard = result.data
+        })
+        BoardAPI.getComment(this.boardId).then(result => {
+          this.commentList = result.data
+        })
+      })
+    },
     BoardList () {
       this.$router.push('boardList')
     },
@@ -122,7 +135,7 @@ export default {
     },
     submitComment () {
       this.commentForm.id = this.loginUser.id
-      axios.post(`http://3.38.10.189:8080/api/board/comments/${this.boardId}`, this.commentForm)
+      axios.post(`http://localhost:8080/api/board/comments/${this.boardId}`, this.commentForm)
         .then(() => {
           this.commentForm.comment = ''
           axios.get(`http://localhost:8080/api/board/comments/${this.boardId}`)

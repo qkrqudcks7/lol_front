@@ -26,7 +26,9 @@ export default {
     return axios.delete(URL + `/comments/${id}`)
   },
   addLikeToBoard (id, email) {
-    console.log(email)
     return axios.post(URL + `/liketoboard/${id}/${email}`)
+  },
+  addLikeToComment (id, email) {
+    return axios.post(URL + `/liketocomment/${id}/${email}`)
   }
 }

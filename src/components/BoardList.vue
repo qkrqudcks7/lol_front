@@ -48,6 +48,10 @@ export default {
         {
           key: 'localDateTime',
           label: '작성날짜'
+        },
+        {
+          key: 'likeCount',
+          label: '좋아요'
         }
       ],
       currentPage: 1,
