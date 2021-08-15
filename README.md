@@ -1,15 +1,6 @@
 # LOL 전적 검색 프로젝트 Front ( Vue.js)
 
 
-(미완성)
-
-toDoList
-1. 게시판 수정,삭제 권한 api 수정  :heavy_check_mark:
-2. 게시판 validation 추가
-3. 롤 챔피언 상세정보 api작성, ui 추가
-4. 롤 다중 계정 검색 기능 추가
-5. 롤 게임 중인 소환사 정보 검색 기능 추가
-
 사이트 : http://park.gg.kr.s3-website.ap-northeast-2.amazonaws.com/
 
 
