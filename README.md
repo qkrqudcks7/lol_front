@@ -1,7 +1,7 @@
 # LOL 전적 검색 프로젝트 Front ( Vue.js)
 
 
-사이트 : http://park.gg.kr.s3-website.ap-northeast-2.amazonaws.com/
+사이트 : http://park.gg.kr.s3-website.ap-northeast-2.amazonaws.com/ (닫음)
 
 
 ![image](https://user-images.githubusercontent.com/66015002/128378408-ae5ca32f-17cc-4ac5-beb9-2e0f1e7aac0c.png)
